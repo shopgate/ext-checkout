@@ -1,0 +1,24 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.startCheckout.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "checkoutId", "id": "1000"},
+      {"key": "messages", "id": "1001", "optional": true}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/startCheckout.js",
+        "input": [],
+        "output": [
+          {"key": "checkoutId", "id": "1000"},
+          {"key": "messages", "id": "1001", "optional": true}
+        ]
+      }
+    ]
+  }
+}
