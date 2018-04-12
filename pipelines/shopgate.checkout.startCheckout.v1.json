@@ -5,8 +5,7 @@
     "public": true,
     "input": [],
     "output": [
-      {"key": "checkoutId", "id": "1000"},
-      {"key": "messages", "id": "1001", "optional": true}
+      {"key": "checkoutId", "id": "1"}
     ],
     "steps": [
       {
@@ -15,8 +14,7 @@
         "path": "@shopgate/checkout/checkout/startCheckout.js",
         "input": [],
         "output": [
-          {"key": "checkoutId", "id": "1000"},
-          {"key": "messages", "id": "1001", "optional": true}
+          {"key": "checkoutId", "id": "1"}
         ]
       }
     ]

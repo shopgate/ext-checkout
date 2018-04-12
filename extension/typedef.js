@@ -40,19 +40,29 @@
 
 /**
  * @typedef {Object} SDKContextLog
- * @property {function} log.trace
- * @property {function} log.debug
- * @property {function} log.info
- * @property {function} log.warn
- * @property {function} log.error
- * @property {function} log.fatal
+ * @property {function} trace
+ * @property {function} debug
+ * @property {function} info
+ * @property {function} warn
+ * @property {function} error
+ * @property {function} fatal
  */
 
 /**
  * @typedef {Object} ExtCheckout
+ * @property {?ExtCheckoutUser} user
+ * @property {?ExtCheckoutItem[]} items
+ * @property {?ExtCheckoutAddress} shippingAddress
+ * @property {?ExtCheckoutAddress} billingAddress
+ * @property {?ExtCheckoutShippingMethod} shippingMethod
+ * @property {?ExtCheckoutPaymentMethod} paymentMethod
+ * @property {?ExtCheckoutTransaction[]} transactions
+ * @property {?Array} customFields
  * @property {string} checkoutId
- * @property {ExtCheckoutUser} user
- * @property {ExtCheckoutItem[]} items
+ * @property {?string} orderId
+ * @property {?string} currency
+ * @property {?number} taxAmount
+ * @property {?number} total
  */
 
 /**
@@ -72,3 +82,18 @@
  * @property {number} quantity
  */
 
+/**
+ * @typedef {Object} ExtCheckoutAddress
+ */
+
+/**
+ * @typedef {Object} ExtCheckoutShippingMethod
+ */
+
+/**
+ * @typedef {Object} ExtCheckoutPaymentMethod
+ */
+
+/**
+ * @typedef {Object} ExtCheckoutTransaction
+ */
