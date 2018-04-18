@@ -1,15 +1,11 @@
-import {routeDidEnter, routeDidLeave} from '@shopgate/pwa-common/streams/history'
+import {routeDidEnter} from '@shopgate/pwa-common/streams/history'
+import {checkoutEnter} from "./action-factory"
 
 export default (subscribe) => {
-  const checkoutRouteDidEnter$ = routeDidEnter('/checkout');
-  const checkoutRouteDidLeave$ = routeDidLeave('/checkout');
+  const checkoutRouteDidEnter$ = routeDidEnter('/checkout2');
 
   subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
-    // fire custom event, when checkout is entered
-    dispatch({type: 'CHECKOUT_ENTER'})
-  })
-
-  subscribe(checkoutRouteDidLeave$, ({ dispatch }) => {
-    dispatch({type: 'CHECKOUT_LEAVE'})
+    // fire custom event, when checkout is entered to accept checkout data from checkout actors
+    dispatch(checkoutEnter())
   })
 }

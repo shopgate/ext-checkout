@@ -1,54 +1,96 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import connect from './connector.js'
 import styles from './style.js'
+import Portal from '@shopgate/pwa-common/components/Portal'
+import * as portals from "./portals"
+
+// @TODO Move theme form elements into dedicated repo pwa-form and inject as dependency here
 import RippleButton from './../../../../themes/theme-gmd/components/RippleButton'
 
 class Checkout extends Component {
-  static propTypes = {
-    processCheckout: PropTypes.func
-  }
+  static propTypes = {}
 
-  static defaultProps = {
-    processCheckout: () => {}
-  }
+  static defaultProps = {}
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      user: '',
-      items: []
-    }
-  }
-
-  handleSubmitForm = (event) => {
-    event.preventDefault()
-    this.props.processCheckout(this.state)
   }
 
   render() {
     const {View} = this.props
     return (
       <View>
-        <section className={styles.container} data-test-id="RegisterPage">
+        <section className={styles.container} data-test-id="CheckoutPage">
           <div className={styles.headline}>
             Checkout
           </div>
           <div className={styles.subline}>
             confirm your order
           </div>
-          <form onSubmit={this.handleSubmitForm}>
-            <div className={styles.buttonWrapper} data-test-id="LoginButton">
-              <RippleButton className={styles.button} type="secondary" disabled={this.props.isLoading}>
-                buy now
-              </RippleButton>
-            </div>
-          </form>
+
+          <div>
+            <Portal name={portals.CHECKOUT_CART_BEFORE}/>
+            <Portal name={portals.CHECKOUT_CART}>
+              cart small view
+            </Portal>
+            <Portal name={portals.CHECKOUT_CART_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS}>
+              select or assign shipping address
+            </Portal>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS}>
+              select or assign billing address
+            </Portal>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE}/>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD}>
+              select or assign payment method
+            </Portal>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE}/>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD}>
+              select or assign shipping method
+            </Portal>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS}>
+              select or assign custom fields
+            </Portal>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_PROCESS}>
+              <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
+                <RippleButton className={styles.button} type="secondary" >
+                  checkout.button
+                </RippleButton>
+              </div>
+            </Portal>
+            <Portal name={portals.CHECKOUT_PROCESS_AFTER}/>
+          </div>
+
         </section>
       </View>
     )
   }
 }
 
-export default connect(Checkout)
+export default Checkout
