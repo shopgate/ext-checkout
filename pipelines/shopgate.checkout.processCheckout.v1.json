@@ -3,81 +3,129 @@
   "pipeline": {
     "id": "shopgate.checkout.processCheckout.v1",
     "public": true,
-    "input": [],
+    "input": [
+      {"key": "items", "id": "10"},
+      {"key": "shippingAddress", "id": "11", "optional": true},
+      {"key": "billingAddress", "id": "12", "optional": true},
+      {"key": "shippingMethod", "id": "13", "optional": true},
+      {"key": "paymentMethod", "id": "14", "optional": true},
+      {"key": "customFields", "id": "15", "optional": true}
+    ],
     "output": [
-      {"key": "orderId", "id": "1002"}
+      {"key": "checkoutId", "id": "501"},
+      {"key": "orderId", "id": "20"}
     ],
     "steps": [
       {
-        "type": "pipeline",
-        "id": "shopgate.cart.getCart.v1",
-        "input": [],
-        "output": [
-          {"key": "currency", "id": "101"},
-          {"key": "cartItems", "id": "102"},
-          {"key": "totals", "id": "103"},
-          {"key": "flags", "id": "104"}
-        ]
-      },
-      {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/setCart.js",
+        "path": "@shopgate/checkout/checkout/validateItems.js",
         "input": [
-          {"key": "currency", "id": "101"},
-          {"key": "cartItems", "id": "102"},
-          {"key": "totals", "id": "103"},
-          {"key": "flags", "id": "104"}
+          {"key": "items", "id": "10"}
         ],
         "output": []
       },
       {
         "type": "pipeline",
-        "id": "shopgate.cart.getUser.v1",
+        "id": "shopgate.user.getUser.v1",
         "input": [],
         "output": [
           {"key": "id", "id": "201"},
           {"key": "mail", "id": "202"},
           {"key": "firstName", "id": "203"},
-          {"key": "lastName", "id": "204"},
-          {"key": "gender", "id": "205"},
-          {"key": "birthday", "id": "206"},
-          {"key": "phone", "id": "207"}
+          {"key": "lastName", "id": "204"}
         ]
       },
       {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/setUser.js",
+        "path": "@shopgate/checkout/packInput.js",
         "input": [
           {"key": "id", "id": "201"},
           {"key": "mail", "id": "202"},
           {"key": "firstName", "id": "203"},
-          {"key": "lastName", "id": "204"},
-          {"key": "gender", "id": "205"},
-          {"key": "birthday", "id": "206"},
-          {"key": "phone", "id": "207"}
+          {"key": "lastName", "id": "204"}
         ],
-        "output": []
+        "output": [
+          {"key": "data", "id": "301"}
+        ]
       },
       {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/getCheckout.js",
+        "path": "@shopgate/checkout/checkout/calculateTotals.js",
+        "input": [
+          {"key": "items", "id": "10"},
+          {"key": "shippingMethod", "id": "13", "optional": true},
+          {"key": "paymentMethod", "id": "14", "optional": true}
+        ],
+        "output": [
+          {"key": "taxAmount", "id": "401"},
+          {"key": "total", "id": "402"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getCheckoutId.js",
         "input": [],
         "output": [
-          {"key": "checkout", "id": "300"}
+          {"key": "checkoutId", "id": "501"}
         ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "user", "id": "301"},
+          {"key": "items", "id": "10"},
+          {"key": "shippingAddress", "id": "11", "optional": true},
+          {"key": "billingAddress", "id": "12", "optional": true},
+          {"key": "shippingMethod", "id": "13", "optional": true},
+          {"key": "paymentMethod", "id": "14", "optional": true},
+          {"key": "customFields", "id": "15", "optional": true},
+          {"key": "checkoutId", "id": "501"},
+          {"key": "taxAmount", "id": "401"},
+          {"key": "total", "id": "402"}
+        ],
+        "output": [
+          {"key": "data", "id": "501"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/saveCheckout.js",
+        "input": [
+          {"key": "checkout", "id": "501"}
+        ],
+        "output": []
       },
       {
         "type": "pipeline",
         "id": "shopgate.order.createOrder.v1",
         "input": [
-          {"key": "checkout", "id": "300"}
+          {"key": "checkout", "id": "501"}
         ],
         "output": [
-          {"key": "orderId", "id": "1002"}
+          {"key": "orderId", "id": "20"}
         ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/backupCheckout.js",
+        "input": [
+          {"key": "orderId", "id": "20"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.deleteCart.v1",
+        "input": [],
+        "output": []
       }
     ]
   }

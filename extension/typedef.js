@@ -88,10 +88,18 @@
 
 /**
  * @typedef {Object} ExtCheckoutShippingMethod
+ * @property {string} id
+ * @property {string} name
+ * @property {number} amount
+ * @property {number} taxAmount
  */
 
 /**
  * @typedef {Object} ExtCheckoutPaymentMethod
+ * @property {string} id
+ * @property {string} name
+ * @property {number} amount
+ * @property {number} taxAmount
  */
 
 /**
