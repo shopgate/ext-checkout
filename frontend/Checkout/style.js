@@ -16,7 +16,7 @@ const headline = css({
 const subline = css({
   fontSize: '1.125rem',
   color: colors.shade6,
-  marginBottom: variables.gap.xxbig
+  marginBottom: variables.gap.xsmall
 }).toString()
 
 const input = css({
