@@ -14,13 +14,14 @@ describe('calculateTotals', () => {
 
   it('Should calculate totals for items, shipping and payment', async () => {
     const expectedTotals = {
+      currency: 'EUR',
       taxAmount: 20,
       total: 1100
     }
     let stepError, totals
     try {
       // noinspection JSCheckFunctionSignatures
-      totals = await executeStep({}, {
+      totals = await executeStep({config: {currency: 'EUR'}}, {
         items,
         shippingMethod,
         paymentMethod

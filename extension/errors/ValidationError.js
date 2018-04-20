@@ -1,4 +1,6 @@
-class ValidationError extends Error {
+const CheckoutError = require('./CheckoutError')
+
+class ValidationError extends CheckoutError {
   constructor (error) {
     super()
 

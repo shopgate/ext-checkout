@@ -1,5 +1,5 @@
 const assert = require('assert')
-const executeStep = require('../../../checkout/backupCheckout')
+const executeStep = require('../../../checkout/finishCheckout')
 
 describe('backupCheckout', () => {
   const checkout = {

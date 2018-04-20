@@ -19,11 +19,20 @@
       {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/validateItems.js",
+        "path": "@shopgate/checkout/checkout/validateCheckout.js",
         "input": [
           {"key": "items", "id": "10"}
         ],
         "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/initCheckout.js",
+        "input": [],
+        "output": [
+          {"key": "checkoutId", "id": "501"}
+        ]
       },
       {
         "type": "pipeline",
@@ -60,17 +69,9 @@
           {"key": "paymentMethod", "id": "14", "optional": true}
         ],
         "output": [
+          {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
           {"key": "total", "id": "402"}
-        ]
-      },
-      {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/getCheckoutId.js",
-        "input": [],
-        "output": [
-          {"key": "checkoutId", "id": "501"}
         ]
       },
       {
@@ -86,6 +87,7 @@
           {"key": "paymentMethod", "id": "14", "optional": true},
           {"key": "customFields", "id": "15", "optional": true},
           {"key": "checkoutId", "id": "501"},
+          {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
           {"key": "total", "id": "402"}
         ],
@@ -115,7 +117,7 @@
       {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/backupCheckout.js",
+        "path": "@shopgate/checkout/checkout/finishCheckout.js",
         "input": [
           {"key": "orderId", "id": "20"}
         ],

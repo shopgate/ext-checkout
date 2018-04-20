@@ -9,11 +9,7 @@
 
 /**
  * @typedef {Object} ExtensionConfig
- * @property {boolean} hasCoupons
- * @property {boolean} allowMultipleCoupons
  * @property {string} currency
- * @property {string} legalText
- * @property {string} legalInfo
  */
 
 /**
@@ -57,7 +53,7 @@
  * @property {?ExtCheckoutShippingMethod} shippingMethod
  * @property {?ExtCheckoutPaymentMethod} paymentMethod
  * @property {?ExtCheckoutTransaction[]} transactions
- * @property {?Array} customFields
+ * @property {?Object} customFields
  * @property {string} checkoutId
  * @property {?string} orderId
  * @property {?string} currency

@@ -1,5 +1,5 @@
 const assert = require('assert')
-const validateItems = require('../../../checkout/validateItems')
+const executeStep = require('../../../checkout/validateCheckout')
 const ValidationError = require('../../../errors/ValidationError')
 
 describe('validateItems', () => {
@@ -12,20 +12,31 @@ describe('validateItems', () => {
     let stepError
     try {
       // noinspection JSCheckFunctionSignatures
-      await validateItems({}, {items: [validProduct, validCoupon]})
+      await executeStep({}, {items: [validProduct, validCoupon]})
     } catch (err) {
       stepError = err
+    } finally {
+      assert.ifError(stepError)
     }
-    assert.ifError(stepError)
   })
 
   it('Should throw error when validation fails', async () => {
     try {
       // noinspection JSCheckFunctionSignatures
-      await validateItems({}, {items: [inValidItem]})
+      await executeStep({}, {items: [inValidItem]})
       assert.fail()
     } catch (err) {
-      assert.equal(err.code, (new ValidationError()).code)
+      assert(err instanceof ValidationError)
+    }
+  })
+
+  it('Should throw error when items are empty', async () => {
+    try {
+      // noinspection JSCheckFunctionSignatures
+      await executeStep({}, {items: []})
+      assert.fail()
+    } catch (err) {
+      assert(err instanceof ValidationError)
     }
   })
 })

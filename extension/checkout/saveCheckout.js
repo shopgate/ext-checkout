@@ -6,7 +6,7 @@ const InternalError = require('./../errors/InternalError')
  */
 
 /**
- * Save checkout to user storage
+ * Replace checkout to user storage
  *
  * @param {SDKContext} context
  * @param {SaveCheckoutInput} input

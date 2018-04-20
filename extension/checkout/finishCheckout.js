@@ -1,15 +1,17 @@
 const InternalError = require('./../errors/InternalError')
+
 /**
- * @typedef {Object} BackupCheckoutInput
+ * @typedef {Object} FinishCheckoutInput
  * @property {string} orderId
  */
+
 /**
- * Set orderId to checkout abd backup
- *
+ * Set orderId to checkout. Backup checkout
  * @param {SDKContext} context
- * @param {BackupCheckoutInput} input
+ * @param {FinishCheckoutInput} input
  */
 module.exports = async (context, input) => {
+  /** @type {ExtCheckout} */
   let checkout
 
   // 1. Get a checkout
@@ -20,9 +22,10 @@ module.exports = async (context, input) => {
     throw new InternalError()
   }
 
+  // Set orderId
   checkout.orderId = input.orderId
 
-  // 2. Set orderId and backup a checkout
+  // 2. Backup a checkout
   try {
     await context.storage.user.set('checkout_bak', checkout)
   } catch (err) {

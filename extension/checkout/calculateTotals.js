@@ -33,6 +33,7 @@ module.exports = async (context, input) => {
   }
 
   return {
+    currency: context.config.currency,
     taxAmount,
     total
   }

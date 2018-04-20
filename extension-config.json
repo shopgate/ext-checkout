@@ -1,6 +1,15 @@
 {
   "version": "1.0.0",
   "id": "@shopgate/checkout",
+  "configuration": {
+    "currency": {
+      "type": "static",
+      "destination": "backend",
+      "params": {
+        "value": "EUR"
+      }
+    }
+  },
   "components": [
     {
       "id": "CheckoutSubscribers",
