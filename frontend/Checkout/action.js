@@ -1,19 +1,20 @@
 import PipelineRequest from '@shopgate/pwa-core/classes/PipelineRequest'
+import {
+  checkoutSuccess,
+  checkoutFail,
+  checkoutProcess
+} from './action-factory'
 
 export default (checkout) => (dispatch) => {
+  dispatch(checkoutProcess())
+
   new PipelineRequest('shopgate.checkout.processCheckout')
     .setInput(checkout)
     .dispatch()
     .then(({ checkoutId }) => {
-      dispatch({
-        type: 'CHECKOUT_SUCCESS',
-        checkoutId
-      })
+      dispatch(checkoutSuccess(checkoutId))
     })
     .catch((error) => {
-      dispatch({
-        type: 'CHECKOUT_FAIL',
-        error
-      })
+      dispatch(checkoutFail(error))
     })
 }

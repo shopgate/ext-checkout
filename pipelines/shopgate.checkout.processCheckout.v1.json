@@ -9,22 +9,14 @@
       {"key": "billingAddress", "id": "12", "optional": true},
       {"key": "shippingMethod", "id": "13", "optional": true},
       {"key": "paymentMethod", "id": "14", "optional": true},
-      {"key": "customFields", "id": "15", "optional": true}
+      {"key": "customFields", "id": "15", "optional": true},
+      {"key": "logs", "id": "16", "optional": true}
     ],
     "output": [
       {"key": "checkoutId", "id": "501"},
       {"key": "orderId", "id": "20"}
     ],
     "steps": [
-      {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/validateCheckout.js",
-        "input": [
-          {"key": "items", "id": "10"}
-        ],
-        "output": []
-      },
       {
         "type": "extension",
         "id": "@shopgate/checkout",
@@ -37,6 +29,7 @@
       {
         "type": "pipeline",
         "id": "shopgate.user.getUser.v1",
+        "trusted": true,
         "input": [],
         "output": [
           {"key": "id", "id": "201"},
@@ -48,7 +41,7 @@
       {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/packInput.js",
+        "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
           {"key": "id", "id": "201"},
           {"key": "mail", "id": "202"},
@@ -86,13 +79,14 @@
           {"key": "shippingMethod", "id": "13", "optional": true},
           {"key": "paymentMethod", "id": "14", "optional": true},
           {"key": "customFields", "id": "15", "optional": true},
+          {"key": "logs", "id": "16", "optional": true},
           {"key": "checkoutId", "id": "501"},
           {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
           {"key": "total", "id": "402"}
         ],
         "output": [
-          {"key": "data", "id": "501"}
+          {"key": "data", "id": "600"}
         ]
       },
       {
@@ -100,7 +94,7 @@
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/saveCheckout.js",
         "input": [
-          {"key": "checkout", "id": "501"}
+          {"key": "checkout", "id": "600"}
         ],
         "output": []
       },
@@ -108,7 +102,7 @@
         "type": "pipeline",
         "id": "shopgate.order.createOrder.v1",
         "input": [
-          {"key": "checkout", "id": "501"}
+          {"key": "order", "id": "600"}
         ],
         "output": [
           {"key": "orderId", "id": "20"}
@@ -126,6 +120,13 @@
       {
         "type": "pipeline",
         "id": "shopgate.cart.deleteCart.v1",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "errorCatchExtension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/handleError.js",
         "input": [],
         "output": []
       }

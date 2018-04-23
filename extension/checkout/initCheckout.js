@@ -1,6 +1,7 @@
 const uuidv4 = require('uuid/v4')
 const InternalError = require('./../errors/InternalError')
 const CheckoutInProgressError = require('./../errors/CheckoutInProgressError')
+const CheckoutError = require('./../errors/CheckoutError')
 
 /**
  * Check if checkout already submitted with same data
@@ -8,6 +9,11 @@ const CheckoutInProgressError = require('./../errors/CheckoutInProgressError')
  * @param {SDKContext} context
  */
 module.exports = async (context) => {
+  if (!context.meta.userId) {
+    context.log.warn('User is not logged in to process checkout')
+    throw new CheckoutError()
+  }
+
   let checkout
   try {
     checkout = await context.storage.user.get('checkout')

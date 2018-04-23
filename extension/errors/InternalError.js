@@ -1,10 +1,9 @@
 const CheckoutError = require('./CheckoutError')
 
 class InternalError extends CheckoutError {
-  constructor (cause) {
-    super()
+  constructor (cause = {message: ''}) {
+    super(cause)
 
-    this.cause = cause
     this.code = 'EINTERNAL'
     this.message = `An internal error occurred ${cause.message}`
   }

@@ -4,7 +4,7 @@ import Checkout from './index'
 
 const CheckoutRoute = (props) => (
   <Route
-    path='/checkout3'
+    path='/checkout2'
     component={Checkout}
     {...props}
   />

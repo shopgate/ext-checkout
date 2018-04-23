@@ -12,6 +12,12 @@
   },
   "components": [
     {
+      "id": "CheckoutRoute",
+      "path": "frontend/Checkout/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
       "id": "CheckoutSubscribers",
       "path": "frontend/Checkout/subscribers.js",
       "type": "subscribers"

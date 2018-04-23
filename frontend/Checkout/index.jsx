@@ -1,18 +1,33 @@
 import React, {Component} from 'react'
-import styles from './style.js'
+import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal'
+import styles from './style.js'
 import * as portals from "./portals"
+import connect from './connector';
 
 // @TODO Move theme form elements into dedicated repo pwa-form and inject as dependency here
 import RippleButton from './../../../../themes/theme-gmd/components/RippleButton'
 
 class Checkout extends Component {
-  static propTypes = {}
+  static propTypes = {
+    processCheckout: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    checkout: PropTypes.shape()
+  }
 
-  static defaultProps = {}
+  static defaultProps = {
+    processCheckout () {},
+    disabled: true,
+    checkout: {}
+  }
 
   constructor(props) {
     super(props)
+  }
+
+  handleProcessCheckout = (event) => {
+    event.preventDefault()
+    this.props.processCheckout(this.props.checkout)
   }
 
   render() {
@@ -79,7 +94,7 @@ class Checkout extends Component {
             <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
             <Portal name={portals.CHECKOUT_PROCESS}>
               <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
-                <RippleButton className={styles.button} type="secondary" >
+                <RippleButton className={styles.button} type="secondary" disabled={this.props.disabled} onClick={this.handleProcessCheckout}>
                   checkout.button
                 </RippleButton>
               </div>
@@ -93,4 +108,4 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout
+export default connect(Checkout)

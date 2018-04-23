@@ -1,9 +1,10 @@
 class CheckoutError extends Error {
-  constructor () {
+  constructor (cause = {message: ''}) {
     super()
 
+    this.cause = cause
     this.code = 'ECHECKOUT'
-    this.message = 'Checkout error.'
+    this.message = `Checkout error: ${cause.message}`
   }
 }
 
