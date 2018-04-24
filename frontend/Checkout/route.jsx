@@ -4,7 +4,7 @@ import Checkout from './index'
 
 const CheckoutRoute = (props) => (
   <Route
-    path='/checkout2'
+    path='/checkoutNative'
     component={Checkout}
     {...props}
   />
