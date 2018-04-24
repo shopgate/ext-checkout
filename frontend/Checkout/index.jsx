@@ -4,6 +4,7 @@ import Portal from '@shopgate/pwa-common/components/Portal'
 import Button from '@shopgate/pwa-common/components/Button'
 import * as portals from "./portals"
 import connect from './connector';
+import styles from './style';
 
 class Checkout extends Component {
   static propTypes = {
@@ -90,8 +91,8 @@ class Checkout extends Component {
           <div>
             <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
             <Portal name={portals.CHECKOUT_PROCESS}>
-              <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
-                <Button className={styles.button} type="secondary" >
+              <div className={styles.buttonWrapper} data-test-id="CheckoutButton" onClick={this.handleProcessCheckout}>
+                <Button className={styles.button} type="secondary" disabled={this.props.disabled} >
                   checkout.button
                 </Button>
               </div>
