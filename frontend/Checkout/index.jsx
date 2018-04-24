@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import styles from './style.js'
 import Portal from '@shopgate/pwa-common/components/Portal'
+import Button from '@shopgate/pwa-common/components/Button'
 import * as portals from "./portals"
-
-// @TODO Move theme form elements into dedicated repo pwa-form and inject as dependency here
-import RippleButton from './../../../../themes/theme-gmd/components/RippleButton'
 
 class Checkout extends Component {
   static propTypes = {}
@@ -79,9 +77,9 @@ class Checkout extends Component {
             <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
             <Portal name={portals.CHECKOUT_PROCESS}>
               <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
-                <RippleButton className={styles.button} type="secondary" >
+                <Button className={styles.button} type="secondary" >
                   checkout.button
-                </RippleButton>
+                </Button>
               </div>
             </Portal>
             <Portal name={portals.CHECKOUT_PROCESS_AFTER}/>
