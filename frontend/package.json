@@ -10,10 +10,9 @@
     "standard": "./node_modules/.bin/standard"
   },
   "license": "Apache-2.0",
-  "dependencies": {
-    "glamor": "^2.20.40"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "glamor": "^2.20.40",
     "@shopgate/pwa-core": "^5.2.0-beta.5",
     "@shopgate/pwa-common": "^5.2.0-beta.5",
     "@shopgate/eslint-config": "^5.1.0",
