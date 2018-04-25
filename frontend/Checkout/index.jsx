@@ -1,0 +1,94 @@
+import React, {Component} from 'react'
+import styles from './style.js'
+import Portal from '@shopgate/pwa-common/components/Portal'
+import Button from '@shopgate/pwa-common/components/Button'
+import * as portals from "./portals"
+
+class Checkout extends Component {
+  static propTypes = {}
+
+  static defaultProps = {}
+
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const {View} = this.props
+    return (
+      <View>
+        <section className={styles.container} data-test-id="CheckoutPage">
+          <div className={styles.headline}>
+            Checkout
+          </div>
+          <div className={styles.subline}>
+            confirm your order
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_CART_BEFORE}/>
+            <Portal name={portals.CHECKOUT_CART}>
+              cart small view
+            </Portal>
+            <Portal name={portals.CHECKOUT_CART_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS}>
+              select or assign shipping address
+            </Portal>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS}>
+              select or assign billing address
+            </Portal>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE}/>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD}>
+              select or assign payment method
+            </Portal>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE}/>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD}>
+              select or assign shipping method
+            </Portal>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS}>
+              select or assign custom fields
+            </Portal>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_AFTER}/>
+          </div>
+
+          <div>
+            <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_PROCESS}>
+              <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
+                <Button className={styles.button} type="secondary" >
+                  checkout.button
+                </Button>
+              </div>
+            </Portal>
+            <Portal name={portals.CHECKOUT_PROCESS_AFTER}/>
+          </div>
+
+        </section>
+      </View>
+    )
+  }
+}
+
+export default Checkout

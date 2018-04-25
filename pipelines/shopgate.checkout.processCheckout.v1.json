@@ -1,0 +1,84 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.processCheckout.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "orderId", "id": "1002"}
+    ],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.getCart.v1",
+        "input": [],
+        "output": [
+          {"key": "currency", "id": "101"},
+          {"key": "cartItems", "id": "102"},
+          {"key": "totals", "id": "103"},
+          {"key": "flags", "id": "104"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/setCart.js",
+        "input": [
+          {"key": "currency", "id": "101"},
+          {"key": "cartItems", "id": "102"},
+          {"key": "totals", "id": "103"},
+          {"key": "flags", "id": "104"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.getUser.v1",
+        "input": [],
+        "output": [
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"},
+          {"key": "gender", "id": "205"},
+          {"key": "birthday", "id": "206"},
+          {"key": "phone", "id": "207"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/setUser.js",
+        "input": [
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"},
+          {"key": "gender", "id": "205"},
+          {"key": "birthday", "id": "206"},
+          {"key": "phone", "id": "207"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getCheckout.js",
+        "input": [],
+        "output": [
+          {"key": "checkout", "id": "300"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.order.createOrder.v1",
+        "input": [
+          {"key": "checkout", "id": "300"}
+        ],
+        "output": [
+          {"key": "orderId", "id": "1002"}
+        ]
+      }
+    ]
+  }
+}

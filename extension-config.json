@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "id": "@shopgate/checkout",
+  "configuration": {},
+  "components": [
+    {
+      "id": "CheckoutRoute",
+      "path": "frontend/Checkout/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "CheckoutSubscribers",
+      "path": "frontend/Checkout/subscribers.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "CheckoutReducers",
+      "path": "frontend/Checkout/reducers.js",
+      "type": "reducers"
+    }
+  ]
+}
