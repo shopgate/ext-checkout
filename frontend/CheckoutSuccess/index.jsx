@@ -8,8 +8,8 @@ import styles from './style';
 
 class CheckoutSuccess extends Component {
   static propTypes = {
-    user: PropTypes.shape().required,
-    continueShopping: PropTypes.func.required
+    user: PropTypes.shape().isRequired,
+    continueShopping: PropTypes.func.isRequired
   }
 
   static defaultProps = {

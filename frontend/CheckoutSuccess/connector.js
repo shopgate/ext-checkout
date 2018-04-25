@@ -7,7 +7,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  continueShopping: () => dispatch(resetHistory('/'))
+  continueShopping: () => {
+    dispatch(resetHistory('/'))
+    dispatch({type: 'TOGGLE_NAVIGATOR_CART_ICON', active: true})
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)

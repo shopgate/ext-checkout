@@ -33,13 +33,6 @@ class Checkout extends Component {
     return (
       <View>
         <section className={styles.container} data-test-id="CheckoutPage">
-          <div className={styles.headline}>
-            Checkout
-          </div>
-          <div className={styles.subline}>
-            confirm your order
-          </div>
-
           <div>
             <Portal name={portals.CHECKOUT_CART_BEFORE}/>
             <Portal name={portals.CHECKOUT_CART}>
