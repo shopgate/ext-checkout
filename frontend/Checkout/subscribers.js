@@ -16,6 +16,6 @@ export default (subscribe) => {
 
   subscribe(checkoutSuccess$, ({ dispatch }) => {
     // User is redirected to homepage after success checkout
-    dispatch(resetHistory('/'))
+    dispatch(resetHistory('/checkout/success'))
   })
 }

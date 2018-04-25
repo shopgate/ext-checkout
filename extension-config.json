@@ -18,6 +18,12 @@
       "type": "portals"
     },
     {
+      "id": "CheckoutSuccessRoute",
+      "path": "frontend/CheckoutSuccess/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
       "id": "CheckoutSubscribers",
       "path": "frontend/Checkout/subscribers.js",
       "type": "subscribers"
