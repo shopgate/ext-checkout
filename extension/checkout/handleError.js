@@ -24,6 +24,6 @@ module.exports = async (error, context) => {
   }
 
   // Outer error. log and throw own error
-  context.log.error(error, 'Error is catched when processing checkout. Unlock checkout')
+  context.log.error(error, 'Error is caught when processing checkout. Unlock checkout')
   throw new CheckoutError(error)
 }
