@@ -18,6 +18,6 @@ describe('getCheckoutUrl', () => {
     } catch (err) {
       // already tested in another unit test case
     }
-    assert.deepEqual(result, {url: '/checkoutNative'})
+    assert.deepEqual(result, {url: '/checkout'})
   })
 })
