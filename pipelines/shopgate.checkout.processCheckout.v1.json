@@ -113,6 +113,14 @@
       },
       {
         "type": "pipeline",
+        "id": "shopgate.checkout.validate.v1",
+        "input": [
+          {"key": "checkout", "id": "600"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
         "id": "shopgate.order.createOrder.v1",
         "input": [
           {"key": "order", "id": "600"}
