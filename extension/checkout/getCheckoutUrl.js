@@ -5,5 +5,5 @@
  * @return {Promise<GetCheckoutUrlResult>}
  */
 module.exports = async () => {
-  return {url: '/checkoutNative'}
+  return {url: '/checkout'}
 }

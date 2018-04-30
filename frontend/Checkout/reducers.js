@@ -1,17 +1,20 @@
 import {CHECKOUT_SUCCESS, CHECKOUT_FAIL, CHECKOUT_DATA, CHECKOUT_ENTER, CHECKOUT_PROCESS} from './action-types'
 
+const requiredItems = ['items']
+
 export default (state = {}, action) => {
   switch (action.type) {
     case CHECKOUT_ENTER:
-      if (!state.checkout) {
-        state.checkout = {
+      return {
+        checkout: {
           logs: []
-        }
-        state.checkoutDisabled = true
+        },
+        checkoutDisabled: true,
+        ...state
       }
-      return state
 
     case CHECKOUT_PROCESS:
+      // Disable checkout button
       return {
         ...state,
         checkoutDisabled: true
@@ -19,27 +22,22 @@ export default (state = {}, action) => {
 
     // Push checkout data parts from checkout actors
     case CHECKOUT_DATA:
-      // required data comes in. Unlock checkout
-      if (['items'].includes(action.id)) {
-        state.checkoutDisabled = false
+      const {data, ...actionRest} = action
+      return {
+        checkout: {
+          ...state.checkout,
+          [action.id]: data,
+          logs: [...state.checkout.logs, {...actionRest, time: new Date().toISOString()}]
+        },
+        checkoutDisabled: !requiredItems.includes(action.id) // required data comes in. Unlock checkout
       }
 
-      state.checkout[action.id] = action.data
-      state.checkout.logs.push({
-        type: action.type,
-        id: action.id,
-        time: new Date().toISOString()
-      })
-      return state
-
     case CHECKOUT_FAIL:
-      state.checkout.logs.push({
-        type: 'error',
-        time: new Date().toISOString(),
-        error: action.error
-      })
       return {
-        ...state,
+        checkout: {
+          ...state.checkout,
+          logs: [...state.checkout.logs, {type: 'error', time: new Date().toISOString(), error: action.error}]
+        },
         checkoutDisabled: false
       }
 
