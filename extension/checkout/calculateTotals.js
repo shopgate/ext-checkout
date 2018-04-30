@@ -3,6 +3,11 @@
  * @property {ExtCheckoutItem[]} items
  * @property {?ExtCheckoutShippingMethod} shippingMethod
  * @property {?ExtCheckoutPaymentMethod} paymentMethod
+ *
+ * @typedef {Object} CalculateTotalsResult
+ * @property {string} currency
+ * @property {number} taxAmount
+ * @property {number} total
  */
 
 /**
@@ -10,6 +15,7 @@
  *
  * @param {SDKContext} context
  * @param {CalculateTotalsInput} input
+ * @returns {Promise<CalculateTotalsResult>}
  */
 module.exports = async (context, input) => {
   let taxAmount = 0
