@@ -4,7 +4,7 @@ import {checkoutEnter} from './action-factory'
 import {checkoutSuccess$} from './streams'
 
 export default (subscribe) => {
-  const checkoutRouteDidEnter$ = routeDidEnter('/checkout2')
+  const checkoutRouteDidEnter$ = routeDidEnter('/checkout')
 
   subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
     // fire custom event, when checkout is entered to accept checkout data from checkout actors

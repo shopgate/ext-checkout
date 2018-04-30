@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.getUrl.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "url", "id": "1"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getCheckoutUrl.js",
+        "input": [],
+        "output": [
+          {"key": "url", "id": "1"}
+        ]
+      }
+    ]
+  }
+}

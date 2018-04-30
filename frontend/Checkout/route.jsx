@@ -6,7 +6,7 @@ import Checkout from './index'
 const CheckoutRoute = (props) => (
   <AuthRoutes to={'/login'}>
     <Route
-      path={'/checkout2'}
+      path={'/checkout'}
       component={Checkout}
       {...props}
     />
