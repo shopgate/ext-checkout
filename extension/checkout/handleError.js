@@ -1,5 +1,5 @@
 const CheckoutError = require('./../common/Error/CheckoutError')
-const unlockDeviceCheckout = require('./unlockDeviceCheckout')
+const unlockUserCheckout = require('./ext-checkout/extension/checkout/unlockUserCheckout')
 
 /**
  * Remove checkout from a storage to unlock a try
@@ -17,7 +17,7 @@ module.exports = async (error, context) => {
 
   try {
     context.log.error(error, 'An error was caught while processing the checkout. Unlocking checkout.')
-    await unlockDeviceCheckout(context)
+    await unlockUserCheckout(context)
   } catch (err) {
     context.log.error(err, 'Failed to unlock the checkout')
   }

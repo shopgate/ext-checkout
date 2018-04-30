@@ -1,6 +1,6 @@
 const assert = require('assert')
 const InternalError = require('./../../../common/Error/InternalError')
-const executeStep = require('../../../checkout/unlockDeviceCheckout')
+const executeStep = require('../../../checkout/unlockUserCheckout')
 const createContext = require('../../mock/createContext')
 
 describe('unlockDeviceCheckout', () => {

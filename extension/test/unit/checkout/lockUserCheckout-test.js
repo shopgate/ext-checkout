@@ -1,7 +1,7 @@
 const assert = require('assert')
 const InternalError = require('../../../common/Error/InternalError')
 const CheckoutInProgressError = require('../../../common/Error/CheckoutInProgressError')
-const executeStep = require('../../../checkout/lockDeviceCheckout')
+const executeStep = require('../../../checkout/lockUserCheckout')
 const createContext = require('../../mock/createContext')
 
 describe('lockDeviceCheckout', () => {
