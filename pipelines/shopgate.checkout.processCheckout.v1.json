@@ -13,18 +13,32 @@
       {"key": "logs", "id": "16", "optional": true}
     ],
     "output": [
-      {"key": "checkoutId", "id": "501"},
       {"key": "orderId", "id": "20"}
     ],
     "steps": [
       {
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "maxLockDuration", "value": 20}],
+        "output": [{"key": "maxLockDuration", "id": "100"}]
+      },
+      {
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/initCheckout.js",
-        "input": [],
+        "path": "@shopgate/checkout/checkout/lockDeviceCheckout.js",
+        "input": [
+          {"key": "lockDuration", "id": "100"}
+        ],
         "output": [
-          {"key": "checkoutId", "id": "501"}
+          {"key": "checkoutLock", "id": "200"}
         ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/checkLoginStatus.js",
+        "input": [],
+        "output": []
       },
       {
         "type": "pipeline",
@@ -55,6 +69,15 @@
       {
         "type": "extension",
         "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/checkConcurrency.js",
+        "input": [
+          {"key": "checkoutLock", "id": "200"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/calculateTotals.js",
         "input": [
           {"key": "items", "id": "10"},
@@ -80,7 +103,6 @@
           {"key": "paymentMethod", "id": "14", "optional": true},
           {"key": "customFields", "id": "15", "optional": true},
           {"key": "logs", "id": "16", "optional": true},
-          {"key": "checkoutId", "id": "501"},
           {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
           {"key": "total", "id": "402"}
@@ -88,15 +110,6 @@
         "output": [
           {"key": "data", "id": "600"}
         ]
-      },
-      {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/saveCheckout.js",
-        "input": [
-          {"key": "checkout", "id": "600"}
-        ],
-        "output": []
       },
       {
         "type": "pipeline",
@@ -109,17 +122,15 @@
         ]
       },
       {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/finishCheckout.js",
-        "input": [
-          {"key": "orderId", "id": "20"}
-        ],
+        "type": "pipeline",
+        "id": "shopgate.cart.deleteCart.v1",
+        "input": [],
         "output": []
       },
       {
-        "type": "pipeline",
-        "id": "shopgate.cart.deleteCart.v1",
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/unlockDeviceCheckout.js",
         "input": [],
         "output": []
       },

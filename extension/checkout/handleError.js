@@ -1,10 +1,13 @@
-const CheckoutError = require('./../errors/CheckoutError')
+const CheckoutError = require('./../common/Error/CheckoutError')
+const unlockDeviceCheckout = require('./unlockDeviceCheckout')
 
 /**
  * Remove checkout from a storage to unlock a try
  *
  * @param {?Error} error
  * @param {SDKContext} context
+ * @throws {CheckoutError}
+ * @returns {Promise<undefined>}
  */
 module.exports = async (error, context) => {
   // If no error occurred, do nothing
@@ -13,9 +16,10 @@ module.exports = async (error, context) => {
   }
 
   try {
-    await context.storage.user.del('checkout')
+    context.log.error(error, 'An error was caught while processing the checkout. Unlocking checkout.')
+    await unlockDeviceCheckout(context)
   } catch (err) {
-    context.log.error(err, 'Failed to delete a checkout from user storage')
+    context.log.error(err, 'Failed to unlock the checkout')
   }
 
   // Own error. Rethrow
@@ -24,6 +28,5 @@ module.exports = async (error, context) => {
   }
 
   // Outer error. log and throw own error
-  context.log.error(error, 'Error is caught when processing checkout. Unlock checkout')
   throw new CheckoutError(error)
 }

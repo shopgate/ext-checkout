@@ -62,6 +62,12 @@
  */
 
 /**
+ * @typedef {Object} ExtCheckoutLock
+ * @property {number} id
+ * @property {number} timestamp
+ */
+
+/**
  * @typedef {Object} ExtCheckoutUser
  * @property {string} id
  * @property {string} firstName
