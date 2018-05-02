@@ -1,11 +1,25 @@
 {
   "version": "2.0.0",
   "id": "@shopgate/checkout",
-  "configuration": {},
+  "configuration": {
+    "currency": {
+      "type": "static",
+      "destination": "backend",
+      "params": {
+        "value": "EUR"
+      }
+    }
+  },
   "components": [
     {
       "id": "CheckoutRoute",
       "path": "frontend/Checkout/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "CheckoutSuccessRoute",
+      "path": "frontend/CheckoutSuccess/route.jsx",
       "target": "app.routes",
       "type": "portals"
     },

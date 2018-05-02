@@ -9,11 +9,7 @@
 
 /**
  * @typedef {Object} ExtensionConfig
- * @property {boolean} hasCoupons
- * @property {boolean} allowMultipleCoupons
  * @property {string} currency
- * @property {string} legalText
- * @property {string} legalInfo
  */
 
 /**
@@ -57,12 +53,18 @@
  * @property {?ExtCheckoutShippingMethod} shippingMethod
  * @property {?ExtCheckoutPaymentMethod} paymentMethod
  * @property {?ExtCheckoutTransaction[]} transactions
- * @property {?Array} customFields
+ * @property {?Object} customFields
  * @property {string} checkoutId
  * @property {?string} orderId
  * @property {?string} currency
  * @property {?number} taxAmount
  * @property {?number} total
+ */
+
+/**
+ * @typedef {Object} ExtCheckoutLock
+ * @property {string} id
+ * @property {number} time in milliseconds  till when lock is valid
  */
 
 /**
@@ -88,10 +90,18 @@
 
 /**
  * @typedef {Object} ExtCheckoutShippingMethod
+ * @property {string} id
+ * @property {string} name
+ * @property {number} amount
+ * @property {number} taxAmount
  */
 
 /**
  * @typedef {Object} ExtCheckoutPaymentMethod
+ * @property {string} id
+ * @property {string} name
+ * @property {number} amount
+ * @property {number} taxAmount
  */
 
 /**

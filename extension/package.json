@@ -7,9 +7,10 @@
     "url": "https://github.com/shopgate/ext-checkout.git"
   },
   "scripts": {
-    "test": "mocha --use_strict recursive test/unit",
-    "coverage": "nyc mocha --use_strict recursive test/unit",
-    "coverage-html": "nyc --reporter=html --report-dir=test/coverage mocha --use_strict recursive test/unit"
+    "test": "./node_modules/.bin/mocha --use_strict recursive test/unit",
+    "coverage": "./node_modules/.bin/nyc ./node_modules/.bin/mocha --use_strict recursive test/unit",
+    "coverage-html": "./node_modules/.bin/nyc --reporter=html --report-dir=test/coverage ./node_modules/.bin/mocha --use_strict recursive test/unit",
+    "standard": "./node_modules/.bin/standard"
   },
   "license": "Apache-2.0",
   "dependencies": {

@@ -1,16 +1,16 @@
 import React from 'react'
 import Route from '@shopgate/pwa-common/components/Router/components/Route'
 import AuthRoutes from '@shopgate/pwa-common/components/Router/components/AuthRoutes'
-import Checkout from './index'
+import CheckoutSuccess from './index'
 
-const CheckoutRoute = (props) => (
+const CheckoutSuccessRoute = (props) => (
   <AuthRoutes to={'/login'}>
     <Route
-      path={'/checkout'}
-      component={Checkout}
+      path={'/checkout/success'}
+      component={CheckoutSuccess}
       {...props}
     />
   </AuthRoutes>
 )
 
-export default CheckoutRoute
+export default CheckoutSuccessRoute

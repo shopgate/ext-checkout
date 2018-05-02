@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/checkout",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Shopgate Connect checkout extension",
   "repository": {
     "type": "git",
@@ -13,8 +13,8 @@
   "dependencies": {},
   "devDependencies": {
     "glamor": "^2.20.40",
-    "@shopgate/pwa-core": "^5.1.0",
-    "@shopgate/pwa-common": "^5.1.0",
+    "@shopgate/pwa-core": "^5.2.0-beta.5",
+    "@shopgate/pwa-common": "^5.2.0-beta.5",
     "@shopgate/eslint-config": "^5.1.0",
     "standard": "^10.0.3"
   }

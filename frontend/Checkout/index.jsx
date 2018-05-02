@@ -1,16 +1,31 @@
 import React, {Component} from 'react'
-import styles from './style.js'
+import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal'
 import Button from '@shopgate/pwa-common/components/Button'
 import * as portals from "./portals"
+import connect from './connector';
+import styles from './style';
 
 class Checkout extends Component {
-  static propTypes = {}
+  static propTypes = {
+    processCheckout: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    checkout: PropTypes.shape()
+  }
 
-  static defaultProps = {}
+  static defaultProps = {
+    processCheckout () {},
+    disabled: true,
+    checkout: {}
+  }
 
   constructor(props) {
     super(props)
+  }
+
+  handleProcessCheckout = (event) => {
+    event.preventDefault()
+    this.props.processCheckout(this.props.checkout)
   }
 
   render() {
@@ -18,13 +33,6 @@ class Checkout extends Component {
     return (
       <View>
         <section className={styles.container} data-test-id="CheckoutPage">
-          <div className={styles.headline}>
-            Checkout
-          </div>
-          <div className={styles.subline}>
-            confirm your order
-          </div>
-
           <div>
             <Portal name={portals.CHECKOUT_CART_BEFORE}/>
             <Portal name={portals.CHECKOUT_CART}>
@@ -76,8 +84,8 @@ class Checkout extends Component {
           <div>
             <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
             <Portal name={portals.CHECKOUT_PROCESS}>
-              <div className={styles.buttonWrapper} data-test-id="CheckoutButton">
-                <Button className={styles.button} type="secondary" >
+              <div className={styles.buttonWrapper} data-test-id="CheckoutButton" onClick={this.handleProcessCheckout}>
+                <Button className={styles.button} type="secondary" disabled={this.props.disabled} >
                   checkout.button
                 </Button>
               </div>
@@ -91,4 +99,4 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout
+export default connect(Checkout)

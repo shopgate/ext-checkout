@@ -2,7 +2,6 @@ const assert = require('assert')
 const executeStep = require('../../../checkout/getCheckoutUrl')
 
 describe('getCheckoutUrl', () => {
-
   it('Should not fail', async () => {
     try {
       await executeStep()

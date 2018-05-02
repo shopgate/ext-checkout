@@ -1,0 +1,154 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.process.v1",
+    "public": true,
+    "input": [
+      {"key": "items", "id": "10"},
+      {"key": "shippingAddress", "id": "11", "optional": true},
+      {"key": "billingAddress", "id": "12", "optional": true},
+      {"key": "shippingMethod", "id": "13", "optional": true},
+      {"key": "paymentMethod", "id": "14", "optional": true},
+      {"key": "customFields", "id": "15", "optional": true},
+      {"key": "logs", "id": "16", "optional": true}
+    ],
+    "output": [
+      {"key": "orderId", "id": "20"}
+    ],
+    "steps": [
+      {
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "maxLockDuration", "value": 20}],
+        "output": [{"key": "maxLockDuration", "id": "100"}]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/lockUserCheckout.js",
+        "input": [
+          {"key": "lockDuration", "id": "100"}
+        ],
+        "output": [
+          {"key": "checkoutLock", "id": "200"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.user.getUser.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"}
+        ],
+        "output": [
+          {"key": "data", "id": "301"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/checkConcurrency.js",
+        "input": [
+          {"key": "checkoutLock", "id": "200"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/calculateTotals.js",
+        "input": [
+          {"key": "items", "id": "10"},
+          {"key": "shippingMethod", "id": "13", "optional": true},
+          {"key": "paymentMethod", "id": "14", "optional": true}
+        ],
+        "output": [
+          {"key": "currency", "id": "400"},
+          {"key": "taxAmount", "id": "401"},
+          {"key": "total", "id": "402"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "user", "id": "301"},
+          {"key": "items", "id": "10"},
+          {"key": "shippingAddress", "id": "11", "optional": true},
+          {"key": "billingAddress", "id": "12", "optional": true},
+          {"key": "shippingMethod", "id": "13", "optional": true},
+          {"key": "paymentMethod", "id": "14", "optional": true},
+          {"key": "customFields", "id": "15", "optional": true},
+          {"key": "logs", "id": "16", "optional": true},
+          {"key": "currency", "id": "400"},
+          {"key": "taxAmount", "id": "401"},
+          {"key": "total", "id": "402"}
+        ],
+        "output": [
+          {"key": "data", "id": "600"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.checkout.validate.v1",
+        "input": [
+          {"key": "order", "id": "600"}
+        ],
+        "output": []
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.order.create.v1",
+        "input": [
+          {"key": "order", "id": "600"}
+        ],
+        "output": [
+          {"key": "orderId", "id": "20"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.deleteCart.v1",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/unlockUserCheckout.js",
+        "input": [],
+        "output": []
+      },
+      {
+        "type": "errorCatchExtension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/handleError.js",
+        "input": [],
+        "output": []
+      }
+    ]
+  }
+}
