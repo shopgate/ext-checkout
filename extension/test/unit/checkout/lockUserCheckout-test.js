@@ -4,8 +4,9 @@ const CheckoutInProgressError = require('../../../common/Error/CheckoutInProgres
 const executeStep = require('../../../checkout/lockUserCheckout')
 const createContext = require('../../mock/createContext')
 
-describe('lockDeviceCheckout', () => {
+describe('lockUserCheckout', () => {
   const storageName = 'user'
+  /** @type {LockUserCheckoutInput} */
   const input = { lockDuration: 20 }
 
   it('Should throw an internal error on storage errors', async () => {
@@ -41,8 +42,8 @@ describe('lockDeviceCheckout', () => {
 
   it('Should use the correct data storage key', async () => {
     const expectedDataStorageKey = 'checkoutLock'
-    let loadKey
-    let saveKey
+    let loadKey = null
+    let saveKey = null
     const context = createContext(
       storageName,
       (key) => { loadKey = key },
@@ -58,9 +59,9 @@ describe('lockDeviceCheckout', () => {
   it('Should throw an error if a lock is still valid', async () => {
     // simulate timestamp that is less than a second old
     // -> round off milliseconds, to put it slightly into the past
-    const prevTimestamp = Math.floor(Date.now() / 1000) * 1000
+    const lockTime = (new Date()).getTime() + input.lockDuration * 1000
 
-    const context = createContext(storageName, () => ({ id: 1, timestamp: prevTimestamp }))
+    const context = createContext(storageName, () => ({ id: 1, time: lockTime }))
 
     try {
       await executeStep(context, input)
@@ -72,10 +73,9 @@ describe('lockDeviceCheckout', () => {
 
   it('Should continue when a saved lock is expired', async () => {
     // simulate timestamp that is 30 seconds old
-    const passedSeconds = 30
-    const prevTimestamp = (Math.floor(Date.now() / 1000) - passedSeconds) * 1000
+    const lockTime = (new Date()).getTime() - input.lockDuration * 1000
 
-    const context = createContext(storageName, () => ({ id: 1, timestamp: prevTimestamp }))
+    const context = createContext(storageName, () => ({ id: 1, time: lockTime }))
 
     try {
       await executeStep(context, input)
@@ -86,7 +86,7 @@ describe('lockDeviceCheckout', () => {
 
   it('Should save the lock into the user storage', async () => {
     const userStorageName = 'user'
-    let writeStorageName
+    let writeStorageName = null
     const context = createContext(
       userStorageName,
       () => {},
@@ -97,7 +97,7 @@ describe('lockDeviceCheckout', () => {
     assert.equal(writeStorageName, userStorageName)
   })
 
-  it('Should save a lock id and timestamp', async () => {
+  it('Should save a lock id and time', async () => {
     /** @type {ExtCheckoutLock} */
     let writtenData
     const context = createContext(
@@ -107,18 +107,19 @@ describe('lockDeviceCheckout', () => {
     )
 
     await executeStep(context, input)
-    assert(writtenData && writtenData.id && writtenData.timestamp)
+    assert(writtenData && writtenData.id && writtenData.time)
   })
 
   it('Should return the saved lock wrapped under checkoutLock property', async () => {
     /** @type {ExtCheckoutLock} */
-    let savedLock
+    let savedLock = {}
     const context = createContext(
       storageName,
       () => {},
       (key, data) => { savedLock = data }
     )
 
+    /** @type {LockUserCheckoutOutput} */
     const returnedLock = await executeStep(context, input)
     assert.deepEqual(returnedLock, { checkoutLock: savedLock })
   })

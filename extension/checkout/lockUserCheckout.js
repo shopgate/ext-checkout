@@ -3,21 +3,27 @@ const InternalError = require('./../common/Error/InternalError')
 const CheckoutInProgressError = require('./../common/Error/CheckoutInProgressError')
 
 /**
+ * @typedef {Object} LockUserCheckoutInput
+ * @property {number} lockDuration
+ */
+
+/**
+ * @typedef {Object} LockUserCheckoutOutput
+ * @property {ExtCheckoutLock} checkoutLock
+ */
+
+/**
  * Locks down a checkout to a max of once every 20 seconds on a single device or user
  *
  * @param {SDKContext} context
- * @param {Object} input
- * @param {number} input.lockDuration
+ * @param {LockUserCheckoutInput} input
  * @throws {CheckoutInProgressError|InternalError}
- * @returns {Promise<ExtCheckoutLock>}
+ * @returns {Promise<LockUserCheckoutOutput>}
  */
 module.exports = async (context, input) => {
   const storageName = 'user'
   const dataStorageKey = 'checkoutLock'
   const lockDuration = input.lockDuration * 1000 // convert seconds to milliseconds
-
-  const lockId = uuidv4()
-  const timestamp = Math.floor(Date.now() / 1000) * 1000
 
   /** @type {ExtCheckoutLock} */
   let previousLock
@@ -29,13 +35,16 @@ module.exports = async (context, input) => {
   }
 
   // test if checkout was locked before and if the lock is still valid
-  if (previousLock && timestamp - previousLock.timestamp < lockDuration) {
-    throw new CheckoutInProgressError()
+  if (previousLock) {
+    const timeNow = (new Date()).getTime()
+    if (timeNow < previousLock.time) {
+      throw new CheckoutInProgressError()
+    }
   }
 
   const checkoutLock = {
-    id: lockId,
-    timestamp
+    id: uuidv4(),
+    time: (new Date()).getTime() + lockDuration // set in future till when lock is valid
   }
 
   try {

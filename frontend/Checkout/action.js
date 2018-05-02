@@ -8,7 +8,7 @@ import {
 export default (checkout) => (dispatch) => {
   dispatch(checkoutProcess())
 
-  new PipelineRequest('shopgate.checkout.processCheckout')
+  new PipelineRequest('shopgate.checkout.process')
     .setInput(checkout)
     .dispatch()
     .then(({ checkoutId }) => {

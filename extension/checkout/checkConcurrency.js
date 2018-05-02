@@ -7,8 +7,7 @@ const CheckoutInProgressError = require('./../common/Error/CheckoutInProgressErr
  * This step should not be executed directly after the lock placement to ensure proper behavior.
  *
  * @param {SDKContext} context
- * @param {Object} input
- * @param {ExtCheckoutLock} input.checkoutLock
+ * @param {LockUserCheckoutOutput} input
  * @throws {CheckoutInProgressError|InternalError}
  * @returns {Promise<null>}
  */
@@ -22,7 +21,7 @@ module.exports = async (context, input) => {
   try {
     initialLock = await context.storage[storageName].get(dataStorageKey)
   } catch (err) {
-    context.log.error(err, `Failed to load checkout lock timestamp from '${storageName}' storage`)
+    context.log.error(err, `Failed to load checkout lock from '${storageName}' storage`)
     throw new InternalError()
   }
 

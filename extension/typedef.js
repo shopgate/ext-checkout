@@ -63,8 +63,8 @@
 
 /**
  * @typedef {Object} ExtCheckoutLock
- * @property {number} id
- * @property {number} timestamp
+ * @property {string} id
+ * @property {number} time in milliseconds  till when lock is valid
  */
 
 /**

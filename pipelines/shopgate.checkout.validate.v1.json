@@ -2,9 +2,9 @@
   "version": "1",
   "pipeline": {
     "id": "shopgate.checkout.validate.v1",
-    "public": true,
+    "public": false,
     "input": [
-      {"key": "checkout", "id": "1"}
+      {"key": "order", "id": "1"}
     ],
     "output": [],
     "steps": [
@@ -13,7 +13,7 @@
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/validateCheckout.js",
         "input": [
-          {"key": "checkout", "id": "1"}
+          {"key": "order", "id": "1"}
         ],
         "output": []
       }

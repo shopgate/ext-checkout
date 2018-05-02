@@ -3,7 +3,7 @@
  *
  * @param {SDKContext} context
  * @param {Object} input
- * @param {ExtCheckout} input.checkout
+ * @param {ExtCheckout} input.order
  * @returns {Promise<null>}
  */
 module.exports = async (context, input) => {

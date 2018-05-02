@@ -1,7 +1,7 @@
 {
   "version": "1",
   "pipeline": {
-    "id": "shopgate.checkout.processCheckout.v1",
+    "id": "shopgate.checkout.process.v1",
     "public": true,
     "input": [
       {"key": "items", "id": "10"},
@@ -115,13 +115,13 @@
         "type": "pipeline",
         "id": "shopgate.checkout.validate.v1",
         "input": [
-          {"key": "checkout", "id": "600"}
+          {"key": "order", "id": "600"}
         ],
         "output": []
       },
       {
         "type": "pipeline",
-        "id": "shopgate.order.createOrder.v1",
+        "id": "shopgate.order.create.v1",
         "input": [
           {"key": "order", "id": "600"}
         ],
