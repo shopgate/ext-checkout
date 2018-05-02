@@ -1,5 +1,5 @@
 const CheckoutError = require('./../common/Error/CheckoutError')
-const unlockUserCheckout = require('./ext-checkout/extension/checkout/unlockUserCheckout')
+const unlockUserCheckout = require('./unlockUserCheckout')
 
 /**
  * Remove checkout from a storage to unlock a try
