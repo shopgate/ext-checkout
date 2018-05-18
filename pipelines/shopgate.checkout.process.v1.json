@@ -76,18 +76,20 @@
         "output": []
       },
       {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/calculateTotals.js",
+        "type": "pipeline",
+        "id": "shopgate.checkout.getTotals.v1",
         "input": [
           {"key": "items", "id": "10"},
+          {"key": "shippingAddress", "id": "11", "optional": true},
+          {"key": "billingAddress", "id": "12", "optional": true},
           {"key": "shippingMethod", "id": "13", "optional": true},
           {"key": "paymentMethod", "id": "14", "optional": true}
         ],
         "output": [
           {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
-          {"key": "total", "id": "402"}
+          {"key": "total", "id": "402"},
+          {"key": "totals", "id": "403"}
         ]
       },
       {
@@ -105,7 +107,8 @@
           {"key": "logs", "id": "16", "optional": true},
           {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
-          {"key": "total", "id": "402"}
+          {"key": "total", "id": "402"},
+          {"key": "totals", "id": "403"}
         ],
         "output": [
           {"key": "data", "id": "600"}

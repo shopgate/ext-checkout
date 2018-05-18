@@ -1,0 +1,36 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.getTotals.v1",
+    "public": true,
+    "input": [
+      {"key": "items", "id": "10"},
+      {"key": "shippingMethod", "id": "11", "optional": true},
+      {"key": "paymentMethod", "id": "12", "optional": true}
+    ],
+    "output": [
+      {"key": "currency", "id": "20"},
+      {"key": "taxAmount", "id": "21"},
+      {"key": "total", "id": "22"},
+      {"key": "totals", "id": "23"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getTotals.js",
+        "input": [
+          {"key": "items", "id": "10"},
+          {"key": "shippingMethod", "id": "11", "optional": true},
+          {"key": "paymentMethod", "id": "12", "optional": true}
+        ],
+        "output": [
+          {"key": "currency", "id": "20"},
+          {"key": "taxAmount", "id": "21"},
+          {"key": "total", "id": "22"},
+          {"key": "totals", "id": "23"}
+        ]
+      }
+    ]
+  }
+}
