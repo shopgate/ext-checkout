@@ -80,8 +80,6 @@
         "id": "shopgate.checkout.getTotals.v1",
         "input": [
           {"key": "items", "id": "10"},
-          {"key": "shippingAddress", "id": "11", "optional": true},
-          {"key": "billingAddress", "id": "12", "optional": true},
           {"key": "shippingMethod", "id": "13", "optional": true},
           {"key": "paymentMethod", "id": "14", "optional": true}
         ],
