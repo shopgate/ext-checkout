@@ -1,12 +1,12 @@
 /**
- * @typedef {Object} CalculateTotalsInput
+ * @typedef {Object} CalculateTotalInput
  * @property {Object[]} totals
  */
 
 /**
  * @param {SDKContext} context
- * @param {CalculateTotalsInput} input
- * @returns {Promise<CalculateTotalsResult>}
+ * @param {CalculateTotalInput} input
+ * @returns {Promise<{total: number}>}
  */
 module.exports = async (context, input) => {
   const totals = input.totals
@@ -25,7 +25,6 @@ module.exports = async (context, input) => {
   })
 
   return {
-    total,
-    totals
+    total
   }
 }

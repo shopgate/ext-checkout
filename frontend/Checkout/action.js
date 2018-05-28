@@ -9,7 +9,7 @@ export default (checkout) => (dispatch) => {
   dispatch(checkoutProcess())
 
   new PipelineRequest('shopgate.checkout.process')
-    .setInput(checkout)
+    .setInput({checkout})
     .dispatch()
     .then(({ checkoutId }) => {
       dispatch(checkoutSuccess(checkoutId))
