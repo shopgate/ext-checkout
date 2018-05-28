@@ -25,6 +25,7 @@ module.exports = async (context, input) => {
   })
 
   return {
-    total
+    total,
+    totals
   }
 }

@@ -26,7 +26,6 @@
         "type": "pipeline",
         "id": "shopgate.cart.getCheckoutTotals.v1",
         "input": [
-          {"key": "checkout", "id": "10"},
           {"key": "totals", "id": "21"}
         ],
         "output": [
@@ -83,7 +82,8 @@
           {"key": "totals", "id": "21"}
         ],
         "output": [
-          {"key": "total", "id": "22"}
+          {"key": "total", "id": "22"},
+          {"key": "totals", "id": "21"}
         ]
       }
     ]

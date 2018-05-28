@@ -35,6 +35,33 @@
         "output": []
       },
       {
+        "type": "pipeline",
+        "id": "shopgate.user.getUser.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/appendUser.js",
+        "input": [
+          {"key": "checkout", "id": "10"},
+          {"key": "id", "id": "201"},
+          {"key": "mail", "id": "202"},
+          {"key": "firstName", "id": "203"},
+          {"key": "lastName", "id": "204"}
+        ],
+        "output": [
+          {"key": "checkout", "id": "10"}
+        ]
+      },
+      {
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/checkConcurrency.js",
