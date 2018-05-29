@@ -1,33 +1,33 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Portal from '@shopgate/pwa-common/components/Portal'
-import Button from '@shopgate/pwa-common/components/Button'
-import * as portals from './portals'
+import Portal from '@shopgate/pwa-common/components/Portal';
+import Button from '@shopgate/pwa-common/components/Button';
+import * as portals from './portals';
 import connect from './connector';
 import styles from './style';
 
+/**
+ * Checkout success component
+ */
 class CheckoutSuccess extends Component {
   static propTypes = {
-    user: PropTypes.shape().isRequired,
-    continueShopping: PropTypes.func.isRequired
+    continueShopping: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    user: {},
-    continueShopping: () => {}
-  }
-
-  constructor(props) {
-    super(props)
-  }
-
+  /**
+   * @param {Object} event App event
+   */
   handleContinueShopping = (event) => {
-    event.preventDefault()
-    this.props.continueShopping()
+    event.preventDefault();
+    this.props.continueShopping();
   }
 
+  /**
+   * @return {*}
+   */
   render() {
-    const {View} = this.props
+    // eslint-disable-next-line react/prop-types
+    const { View } = this.props;
     return (
       <View>
         <section className={styles.container} data-test-id="CheckoutSuccessPage">
@@ -36,19 +36,24 @@ class CheckoutSuccess extends Component {
           </div>
 
           <div>
-            <Portal name={portals.CHECKOUT_SUCCESS_BEFORE}/>
+            <Portal name={portals.CHECKOUT_SUCCESS_BEFORE} />
             <Portal name={portals.CHECKOUT_SUCCESS}>
               <div className={styles.subline}>
                 Your order is received.
               </div>
             </Portal>
-            <Portal name={portals.CHECKOUT_SUCCESS_AFTER}/>
+            <Portal name={portals.CHECKOUT_SUCCESS_AFTER} />
           </div>
 
           <div>
             <Portal name={portals.CHECKOUT_SUCCESS_CONTINUE}>
-              <div className={styles.buttonWrapper} data-test-id="CheckoutSuccessButton" onClick={this.handleContinueShopping}>
-                <Button className={styles.button} type="secondary" disabled={this.props.disabled} >
+              <div className={styles.buttonWrapper} >
+                <Button
+                  className={styles.button}
+                  type="secondary"
+                  onClick={this.handleContinueShopping}
+                  data-test-id="CheckoutSuccessButton"
+                >
                   Continue shopping
                 </Button>
               </div>
@@ -57,8 +62,8 @@ class CheckoutSuccess extends Component {
 
         </section>
       </View>
-    )
+    );
   }
 }
 
-export default connect(CheckoutSuccess)
+export default connect(CheckoutSuccess);

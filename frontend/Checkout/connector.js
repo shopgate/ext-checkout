@@ -1,14 +1,22 @@
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect'
-import processCheckout from './action'
-import {getCheckout, getCheckoutDisabled} from './selectors'
+import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import processCheckout from './action';
+import { getCheckout, getCheckoutDisabled } from './selectors';
 
-const mapStateToProps = (state) => ({
+/**
+ * @param {Object} state state
+ * @return {{disabled: boolean, checkout: *}}
+ */
+const mapStateToProps = state => ({
   disabled: getCheckoutDisabled(state),
-  checkout: getCheckout(state)
-})
+  checkout: getCheckout(state),
+});
 
-const mapDispatchToProps = (dispatch) => ({
-  processCheckout: (checkout) => dispatch(processCheckout(checkout))
-})
+/**
+ * @param {function} dispatch redux dispatch
+ * @return {{processCheckout: (function(*=): *)}}
+ */
+const mapDispatchToProps = dispatch => ({
+  processCheckout: checkout => dispatch(processCheckout(checkout)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps);
