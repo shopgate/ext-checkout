@@ -11,6 +11,16 @@
     ],
     "steps": [
       {
+        "_comment": "Only logged in users are allowed to perform a checkout.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/checkLoginStatus.js",
+        "input": [],
+        "output": []
+      },
+
+      {
         "_comment": "Provides a required value for the checkout lock. The lock will be automatically lifted after given seconds.",
 
         "type": "staticValue",
@@ -30,16 +40,6 @@
         "output": [
           {"key": "checkoutLock", "id": "501"}
         ]
-      },
-
-      {
-        "_comment": "Only logged in users are allowed to perform a checkout.",
-
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/checkLoginStatus.js",
-        "input": [],
-        "output": []
       },
 
       {
