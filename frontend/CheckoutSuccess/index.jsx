@@ -47,8 +47,13 @@ class CheckoutSuccess extends Component {
 
           <div>
             <Portal name={portals.CHECKOUT_SUCCESS_CONTINUE}>
-              <div className={styles.buttonWrapper} data-test-id="CheckoutSuccessButton" onClick={this.handleContinueShopping}>
-                <Button className={styles.button} type="secondary" >
+              <div className={styles.buttonWrapper} >
+                <Button
+                  className={styles.button}
+                  type="secondary"
+                  onClick={this.handleContinueShopping}
+                  data-test-id="CheckoutSuccessButton"
+                >
                   Continue shopping
                 </Button>
               </div>

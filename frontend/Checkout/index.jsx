@@ -29,7 +29,11 @@ class Checkout extends Component {
     this.props.processCheckout(this.props.checkout);
   }
 
+  /**
+   * @return {*}
+   */
   render() {
+    // eslint-disable-next-line react/prop-types
     const { View } = this.props;
     return (
       <View>
@@ -81,8 +85,14 @@ class Checkout extends Component {
           <Fragment>
             <Portal name={portals.CHECKOUT_PROCESS_BEFORE} />
             <Portal name={portals.CHECKOUT_PROCESS}>
-              <div className={styles.buttonWrapper} data-test-id="CheckoutButton" onClick={this.handleProcessCheckout}>
-                <Button className={styles.button} type="secondary" disabled={this.props.disabled} >
+              <div className={styles.buttonWrapper}>
+                <Button
+                  className={styles.button}
+                  type="secondary"
+                  disabled={this.props.disabled}
+                  onClick={this.handleProcessCheckout}
+                  data-test-id="CheckoutButton"
+                >
                   checkout.button
                 </Button>
               </div>
