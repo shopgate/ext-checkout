@@ -1,6 +1,20 @@
-export const getCheckout = (state) => {
-  return state.extensions['@shopgate/checkout/CheckoutReducers'].checkout
-}
-export const getCheckoutDisabled = (state) => {
-  return state.extensions['@shopgate/checkout/CheckoutReducers'].checkoutDisabled
-}
+/**
+ * @param {Object} state redux
+ * @return {*}
+ */
+export const getCheckout = state => state.extensions['@shopgate/checkout/CheckoutReducers'].checkout;
+/**
+ * @param {Object} state redux
+ * @return {boolean}
+ */
+export const getCheckoutDisabled = state => state.extensions['@shopgate/checkout/CheckoutReducers'].checkoutDisabled;
+/**
+ * @param {Object} state state
+ * @return {*}
+ */
+export const getCheckoutCurrency = state => state.extensions['@shopgate/checkout/CheckoutReducers'].currency;
+/**
+ * @param {Object} state state
+ * @return {*}
+ */
+export const getCheckoutTotals = state => state.extensions['@shopgate/checkout/CheckoutReducers'].totals;

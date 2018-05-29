@@ -1,0 +1,91 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.getTotals.v1",
+    "public": true,
+    "input": [
+      {"key": "checkout", "id": "10"}
+    ],
+    "output": [
+      {"key": "currency", "id": "20"},
+      {"key": "totals", "id": "21"},
+      {"key": "total", "id": "22"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getSubTotals.js",
+        "input": [],
+        "output": [
+          {"key": "currency", "id": "20"},
+          {"key": "totals", "id": "21"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.cart.getCheckoutTotals.v1",
+        "input": [
+          {"key": "totals", "id": "21"}
+        ],
+        "output": [
+          {"key": "totals", "id": "21"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.shipping.getCheckoutTotals.v1",
+        "input": [
+          {"key": "checkout", "id": "10"},
+          {"key": "totals", "id": "21"}
+        ],
+        "output": [
+          {"key": "totals", "id": "21"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.payment.getCheckoutTotals.v1",
+        "input": [
+          {"key": "checkout", "id": "10"},
+          {"key": "totals", "id": "21"}
+        ],
+        "output": [
+          {"key": "totals", "id": "21"}
+        ]
+      },
+      {
+        "type": "pipeline",
+        "id": "shopgate.tax.getCheckoutTotals.v1",
+        "input": [
+          {"key": "checkout", "id": "10"},
+          {"key": "totals", "id": "21"}
+        ],
+        "output": [
+          {"key": "totals", "id": "21"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/validateTotals.js",
+        "input": [
+          {"key": "totals", "id": "21"}
+        ],
+        "output": []
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getTotal.js",
+        "input": [
+          {"key": "totals", "id": "21"}
+        ],
+        "output": [
+          {"key": "total", "id": "22"},
+          {"key": "totals", "id": "21"}
+        ]
+      }
+    ]
+  }
+}
