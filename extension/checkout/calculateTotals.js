@@ -30,12 +30,12 @@ module.exports = async (context, input) => {
 
   if (input.shippingMethod) {
     total += input.shippingMethod.amount
-    taxAmount += input.shippingMethod.taxAmount
+    taxAmount += input.shippingMethod.taxAmount || 0
   }
 
   if (input.paymentMethod) {
     total += input.paymentMethod.amount
-    taxAmount += input.paymentMethod.taxAmount
+    taxAmount += input.paymentMethod.taxAmount || 0
   }
 
   return {

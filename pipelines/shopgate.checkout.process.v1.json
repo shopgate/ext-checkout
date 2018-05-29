@@ -4,13 +4,7 @@
     "id": "shopgate.checkout.process.v1",
     "public": true,
     "input": [
-      {"key": "items", "id": "10"},
-      {"key": "shippingAddress", "id": "11", "optional": true},
-      {"key": "billingAddress", "id": "12", "optional": true},
-      {"key": "shippingMethod", "id": "13", "optional": true},
-      {"key": "paymentMethod", "id": "14", "optional": true},
-      {"key": "customFields", "id": "15", "optional": true},
-      {"key": "logs", "id": "16", "optional": true}
+      {"key": "checkout", "id": "10"}
     ],
     "output": [
       {"key": "orderId", "id": "20"}
@@ -53,6 +47,41 @@
         ]
       },
       {
+        "type": "pipeline",
+        "id": "shopgate.checkout.getShippingMethod.v1",
+        "input": [
+          {"key": "checkout", "id": "10"}
+        ],
+        "output": [
+          {"key": "shippingMethod", "id": "14", "optional": true}
+        ]
+      },
+      {
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "shippingMethodPropertyFilter", "value": [
+          "id",
+          "name",
+          "amount",
+          "taxAmount"
+        ]}],
+        "output": [
+          {"key": "shippingMethodPropertyFilter", "id": "8"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "input": [
+          {"key": "properties", "id": "8"},
+          {"key": "hydratedObject", "id": "14", "optional": true}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "14", "optional": true}
+        ]
+      },
+      {
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/packInput.js",
@@ -64,6 +93,38 @@
         ],
         "output": [
           {"key": "data", "id": "301"}
+        ]
+      },
+      {
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "unpackProperties", "value": [
+          "items",
+          "shippingAddress",
+          "billingAddress",
+          "paymentMethod",
+          "customFields",
+          "logs"
+        ]}],
+        "output": [
+          {"key": "unpackProperties", "id": "9"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/unpackInput.js",
+        "input": [
+          {"key": "properties", "id": "9"},
+          {"key": "packedInput", "id": "10"}
+        ],
+        "output": [
+          {"key": "items", "id": "11"},
+          {"key": "shippingAddress", "id": "12", "optional": true},
+          {"key": "billingAddress", "id": "13", "optional": true},
+          {"key": "paymentMethod", "id": "15", "optional": true},
+          {"key": "customFields", "id": "16", "optional": true},
+          {"key": "logs", "id": "17", "optional": true}
         ]
       },
       {
@@ -80,9 +141,9 @@
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/calculateTotals.js",
         "input": [
-          {"key": "items", "id": "10"},
-          {"key": "shippingMethod", "id": "13", "optional": true},
-          {"key": "paymentMethod", "id": "14", "optional": true}
+          {"key": "items", "id": "11"},
+          {"key": "shippingMethod", "id": "14", "optional": true},
+          {"key": "paymentMethod", "id": "15", "optional": true}
         ],
         "output": [
           {"key": "currency", "id": "400"},
@@ -96,13 +157,13 @@
         "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
           {"key": "user", "id": "301"},
-          {"key": "items", "id": "10"},
-          {"key": "shippingAddress", "id": "11", "optional": true},
-          {"key": "billingAddress", "id": "12", "optional": true},
-          {"key": "shippingMethod", "id": "13", "optional": true},
-          {"key": "paymentMethod", "id": "14", "optional": true},
-          {"key": "customFields", "id": "15", "optional": true},
-          {"key": "logs", "id": "16", "optional": true},
+          {"key": "items", "id": "11"},
+          {"key": "shippingAddress", "id": "12", "optional": true},
+          {"key": "billingAddress", "id": "13", "optional": true},
+          {"key": "shippingMethod", "id": "14", "optional": true},
+          {"key": "paymentMethod", "id": "15", "optional": true},
+          {"key": "customFields", "id": "16", "optional": true},
+          {"key": "logs", "id": "17", "optional": true},
           {"key": "currency", "id": "400"},
           {"key": "taxAmount", "id": "401"},
           {"key": "total", "id": "402"}
