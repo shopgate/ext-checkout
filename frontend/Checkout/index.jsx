@@ -1,88 +1,85 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Portal from '@shopgate/pwa-common/components/Portal'
-import Button from '@shopgate/pwa-common/components/Button'
-import * as portals from "./portals"
+import Portal from '@shopgate/pwa-common/components/Portal';
+import Button from '@shopgate/pwa-common/components/Button';
+import * as portals from './portals';
 import connect from './connector';
 import styles from './style';
+import Totals from './components/Totals';
 
+/**
+ * Checkout component
+ */
 class Checkout extends Component {
   static propTypes = {
-    processCheckout: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    checkout: PropTypes.shape()
+    processCheckout: PropTypes.func.isRequired,
+    checkout: PropTypes.shape(),
   }
 
   static defaultProps = {
-    processCheckout () {},
-    disabled: true,
-    checkout: {}
+    checkout: {},
   }
 
-  constructor(props) {
-    super(props)
-  }
-
+  /**
+   * @param {Object} event App event
+   */
   handleProcessCheckout = (event) => {
-    event.preventDefault()
-    this.props.processCheckout(this.props.checkout)
+    event.preventDefault();
+    this.props.processCheckout(this.props.checkout);
   }
 
   render() {
-    const {View} = this.props
+    const { View } = this.props;
     return (
       <View>
         <section className={styles.container} data-test-id="CheckoutPage">
-          <div>
-            <Portal name={portals.CHECKOUT_CART_BEFORE}/>
-            <Portal name={portals.CHECKOUT_CART}>
-              cart small view
-            </Portal>
-            <Portal name={portals.CHECKOUT_CART_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_CART_BEFORE} />
+            <Portal name={portals.CHECKOUT_CART} />
+            <Portal name={portals.CHECKOUT_CART_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE}/>
-            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS}>
-              select or assign shipping address
-            </Portal>
-            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE} />
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS} />
+            <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE}/>
-            <Portal name={portals.CHECKOUT_BILLING_ADDRESS}>
-              select or assign billing address
-            </Portal>
-            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE} />
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS} />
+            <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE}/>
-            <Portal name={portals.CHECKOUT_PAYMENT_METHOD}>
-              select or assign payment method
-            </Portal>
-            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE} />
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD} />
+            <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE}/>
-            <Portal name={portals.CHECKOUT_SHIPPING_METHOD}>
-              select or assign shipping method
-            </Portal>
-            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE} />
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD} />
+            <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_BEFORE}/>
-            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS}>
-              select or assign custom fields
-            </Portal>
-            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_AFTER}/>
-          </div>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_BEFORE} />
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS} />
+            <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_AFTER} />
+          </Fragment>
 
-          <div>
-            <Portal name={portals.CHECKOUT_PROCESS_BEFORE}/>
+          <Fragment>
+            <Portal name={portals.CHECKOUT_TOTALS_BEFORE} />
+            <Portal name={portals.CHECKOUT_TOTALS}>
+              <Totals />
+            </Portal>
+            <Portal name={portals.CHECKOUT_TOTALS_AFTER} />
+          </Fragment>
+
+          <Fragment>
+            <Portal name={portals.CHECKOUT_PROCESS_BEFORE} />
             <Portal name={portals.CHECKOUT_PROCESS}>
               <div className={styles.buttonWrapper} data-test-id="CheckoutButton" onClick={this.handleProcessCheckout}>
                 <Button className={styles.button} type="secondary" disabled={this.props.disabled} >
@@ -90,13 +87,13 @@ class Checkout extends Component {
                 </Button>
               </div>
             </Portal>
-            <Portal name={portals.CHECKOUT_PROCESS_AFTER}/>
-          </div>
+            <Portal name={portals.CHECKOUT_PROCESS_AFTER} />
+          </Fragment>
 
         </section>
       </View>
-    )
+    );
   }
 }
 
-export default connect(Checkout)
+export default connect(Checkout);

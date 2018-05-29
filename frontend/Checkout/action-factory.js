@@ -2,23 +2,47 @@ import {
   CHECKOUT_ENTER,
   CHECKOUT_SUCCESS,
   CHECKOUT_FAIL,
-  CHECKOUT_PROCESS
-} from './action-types'
+  CHECKOUT_PROCESS,
+  CHECKOUT_TOTALS,
+} from './action-types';
 
+/**
+ * @return {{type: string}}
+ */
 export const checkoutEnter = () => ({
-  type: CHECKOUT_ENTER
-})
+  type: CHECKOUT_ENTER,
+});
 
-export const checkoutSuccess = (checkoutId) => ({
+/**
+ * @param {string} orderId created order id
+ * @return {{type: string, checkoutId: *}}
+ */
+export const checkoutSuccess = orderId => ({
   type: CHECKOUT_SUCCESS,
-  checkoutId
-})
+  orderId,
+});
 
-export const checkoutFail = (error) => ({
+/**
+ * @param {Error} error error
+ * @return {{type: string, error: *}}
+ */
+export const checkoutFail = error => ({
   type: CHECKOUT_FAIL,
-  error
-})
+  error,
+});
 
+/**
+ * @return {{type: string}}
+ */
 export const checkoutProcess = () => ({
-  type: CHECKOUT_PROCESS
-})
+  type: CHECKOUT_PROCESS,
+});
+
+/**
+ * @param {{currency: string, totals: Object[]}} totals result from pipeline
+ * @return {{type: string, currency: string, totals: Object[]}}
+ */
+export const checkoutTotals = totals => ({
+  type: CHECKOUT_TOTALS,
+  ...totals,
+});
