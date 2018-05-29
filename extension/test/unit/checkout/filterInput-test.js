@@ -2,7 +2,7 @@ const assert = require('assert')
 const executeStep = require('../../../checkout/filterInput')
 
 describe('filterInput', () => {
-  it('Should pack input', async () => {
+  it('Should filter out all properties of the given object except the given ones to keep', async () => {
     const input = {
       properties: ['age', 'name', 'rating'],
       hydratedObject: {
@@ -13,6 +13,8 @@ describe('filterInput', () => {
         rating: '5 Stars'
       }
     }
+
+    // make sure the order is correct as well
     const expected = {
       filteredObject: {
         age: 33,

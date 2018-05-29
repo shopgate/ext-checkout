@@ -11,8 +11,12 @@ describe('packInput', () => {
       rating: '5 Stars'
     }
 
+    const expected = {
+      data: input
+    }
+
     // noinspection JSCheckFunctionSignatures
     const output = await executeStep({}, input)
-    assert.deepEqual(output, {data: input})
+    assert.deepEqual(output, expected)
   })
 })
