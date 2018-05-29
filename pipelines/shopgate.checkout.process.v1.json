@@ -64,23 +64,36 @@
         "trusted": true,
         "input": [],
         "output": [
-          {"key": "id", "id": "111"},
-          {"key": "mail", "id": "112"},
-          {"key": "firstName", "id": "113"},
-          {"key": "lastName", "id": "114"}
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
         ]
       },
       {
-        "_comment": "Put user data into a single object to be injected into the checkout object.",
+        "_comment": "Put user data into a single object for later use.",
 
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
-          {"key": "id", "id": "111"},
-          {"key": "mail", "id": "112"},
-          {"key": "firstName", "id": "113"},
-          {"key": "lastName", "id": "114"}
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
+        ],
+        "output": [
+          {"key": "data", "id": "111"}
+        ]
+      },
+      {
+        "_comment": "Pack user data into a property named 'user' to attach to checkout.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "user", "id": "111"}
         ],
         "output": [
           {"key": "data", "id": "110"}
@@ -151,7 +164,20 @@
           {"key": "hydratedObject", "id": "121", "optional": true}
         ],
         "output": [
-          {"key": "filteredObject", "id": "120", "optional": true}
+          {"key": "filteredObject", "id": "122", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Pack shipping method data into a property named 'shippingMethod'.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "shippingMethod", "id": "122", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "120", "optional": true}
         ]
       },
       {
@@ -170,6 +196,85 @@
       },
 
       {
+        "_comment": "Defines a payment method property name to extract from the checkout object.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "paymentMethodPropertyName", "value": ["paymentMethod"]}],
+        "output": [{"key": "paymentMethodPropertyName", "id": "504"}]
+      },
+      {
+        "_comment": "Extract the single paymentMethodObject.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/unpackInput.js",
+        "input": [
+          {"key": "properties", "id": "504"},
+          {"key": "packedInput", "id": "100"}
+        ],
+        "output": [
+          {"key": "paymentMethod", "id": "131", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Defines a list of properties to keep from the payment method, because not all properties are used to create the order.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "paymentMethodPropertyFilter", "value": [
+          "id",
+          "name",
+          "amount",
+          "taxAmount"
+        ]}],
+        "output": [
+          {"key": "paymentMethodPropertyFilter", "id": "505"}
+        ]
+      },
+      {
+        "_comment": "Filters out all non white-listed properties from the payment method.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "input": [
+          {"key": "properties", "id": "505"},
+          {"key": "hydratedObject", "id": "131", "optional": true}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "132", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Pack payment method data into a property named 'paymentMethod'.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "paymentMethod", "id": "132", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "130", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Merge the payment method back into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "130", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
         "_comment": "Request totals data based on the current checkout data.",
 
         "type": "pipeline",
@@ -178,9 +283,9 @@
           {"key": "checkout", "id": "100"}
         ],
         "output": [
-          {"key": "currency", "id": "131"},
-          {"key": "total", "id": "132"},
-          {"key": "totals", "id": "133"}
+          {"key": "currency", "id": "141"},
+          {"key": "total", "id": "142"},
+          {"key": "totals", "id": "143"}
         ]
       },
       {
@@ -190,12 +295,12 @@
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
-          {"key": "currency", "id": "131"},
-          {"key": "total", "id": "132"},
-          {"key": "totals", "id": "133"}
+          {"key": "currency", "id": "141"},
+          {"key": "total", "id": "142"},
+          {"key": "totals", "id": "143"}
         ],
         "output": [
-          {"key": "data", "id": "130"}
+          {"key": "data", "id": "140"}
         ]
       },
       {
@@ -206,7 +311,7 @@
         "path": "@shopgate/checkout/checkout/mergeInput.js",
         "input": [
           {"key": "first", "id": "100"},
-          {"key": "second", "id": "130"}
+          {"key": "second", "id": "140"}
         ],
         "output": [
           {"key": "data", "id": "100"}
