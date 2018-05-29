@@ -55,6 +55,11 @@ export default (state = {}, action) => {
     case CHECKOUT_TOTALS:
       return {
         ...state,
+        logs: [...state.checkout.logs, {
+          type: 'totals',
+          time: new Date().toISOString(),
+          totals: action.totals,
+        }],
         checkoutDisabled: false,
         currency: action.currency,
         totals: action.totals,
