@@ -7,10 +7,12 @@ import {
 } from './action-types';
 
 /**
+ * @param {Object} checkoutContext checkout context
  * @return {{type: string}}
  */
-export const checkoutEnter = () => ({
+export const checkoutEnter = checkoutContext => ({
   type: CHECKOUT_ENTER,
+  ...checkoutContext,
 });
 
 /**

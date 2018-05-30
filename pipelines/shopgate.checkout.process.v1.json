@@ -4,130 +4,416 @@
     "id": "shopgate.checkout.process.v1",
     "public": true,
     "input": [
-      {"key": "checkout", "id": "10"}
+      {"key": "checkout", "id": "1"}
     ],
     "output": [
-      {"key": "orderId", "id": "20"}
+      {"key": "orderId", "id": "10"}
     ],
     "steps": [
       {
-        "type": "staticValue",
-        "input": [],
-        "values": [{"key": "maxLockDuration", "value": 20}],
-        "output": [{"key": "maxLockDuration", "id": "100"}]
-      },
-      {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/lockUserCheckout.js",
-        "input": [
-          {"key": "lockDuration", "id": "100"}
-        ],
-        "output": [
-          {"key": "checkoutLock", "id": "200"}
-        ]
-      },
-      {
+        "_comment": "Only logged in users are allowed to perform a checkout.",
+
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/checkLoginStatus.js",
         "input": [],
         "output": []
       },
+
       {
+        "_comment": "Provides a required value for the checkout lock. The lock will be automatically lifted after given seconds.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "maxLockDuration", "value": 20}],
+        "output": [{"key": "maxLockDuration", "id": "500"}]
+      },
+      {
+        "_comment": "Applies a lock to the users checkout to avoid concurrency issues.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/lockUserCheckout.js",
+        "input": [
+          {"key": "lockDuration", "id": "500"}
+        ],
+        "output": [
+          {"key": "checkoutLock", "id": "501"}
+        ]
+      },
+
+      {
+        "_comment": "Copy checkout object for modification.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "1"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Fetch user data for the checkout",
+
         "type": "pipeline",
         "id": "shopgate.user.getUser.v1",
         "trusted": true,
         "input": [],
         "output": [
-          {"key": "id", "id": "201"},
-          {"key": "mail", "id": "202"},
-          {"key": "firstName", "id": "203"},
-          {"key": "lastName", "id": "204"}
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
         ]
       },
       {
+        "_comment": "Put user data into a single object for later use.",
+
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/appendUser.js",
+        "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
-          {"key": "checkout", "id": "10"},
-          {"key": "id", "id": "201"},
-          {"key": "mail", "id": "202"},
-          {"key": "firstName", "id": "203"},
-          {"key": "lastName", "id": "204"}
+          {"key": "id", "id": "112"},
+          {"key": "mail", "id": "113"},
+          {"key": "firstName", "id": "114"},
+          {"key": "lastName", "id": "115"}
         ],
         "output": [
-          {"key": "checkout", "id": "10"}
+          {"key": "data", "id": "111"}
         ]
       },
       {
+        "_comment": "Pack user data into a property named 'user' to attach to checkout.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "user", "id": "111"}
+        ],
+        "output": [
+          {"key": "data", "id": "110"}
+        ]
+      },
+      {
+        "_comment": "Merge user data into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "110"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Avoids duplicate checkouts and other concurrency issues, by checking the previously installed lock.",
+
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/checkConcurrency.js",
         "input": [
-          {"key": "checkoutLock", "id": "200"}
+          {"key": "checkoutLock", "id": "501"}
         ],
         "output": []
       },
+
       {
+        "_comment": "Request the currently selected shipping method from the incoming checkout.",
+
+        "type": "pipeline",
+        "id": "shopgate.checkout.getShippingMethod.v1",
+        "input": [
+          {"key": "checkout", "id": "100"}
+        ],
+        "output": [
+          {"key": "shippingMethod", "id": "121", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Defines a list of properties to keep from the shipping method, because not all properties are used to create the order.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "shippingMethodPropertyFilter", "value": [
+          "id",
+          "name",
+          "amount",
+          "taxAmount"
+        ]}],
+        "output": [
+          {"key": "shippingMethodPropertyFilter", "id": "503"}
+        ]
+      },
+      {
+        "_comment": "Filters out all non white-listed properties from the shipping method.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "input": [
+          {"key": "properties", "id": "503"},
+          {"key": "hydratedObject", "id": "121", "optional": true}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "122", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Pack shipping method data into a property named 'shippingMethod'.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "shippingMethod", "id": "122", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "120", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Merge the currently selected shipping method into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "120", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Defines a payment method property name to extract from the checkout object.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "paymentMethodPropertyName", "value": ["paymentMethod"]}],
+        "output": [{"key": "paymentMethodPropertyName", "id": "504"}]
+      },
+      {
+        "_comment": "Extract the single paymentMethodObject.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/unpackInput.js",
+        "input": [
+          {"key": "properties", "id": "504"},
+          {"key": "packedInput", "id": "100"}
+        ],
+        "output": [
+          {"key": "paymentMethod", "id": "131", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Defines a list of properties to keep from the payment method, because not all properties are used to create the order.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "paymentMethodPropertyFilter", "value": [
+          "id",
+          "name",
+          "amount",
+          "taxAmount"
+        ]}],
+        "output": [
+          {"key": "paymentMethodPropertyFilter", "id": "505"}
+        ]
+      },
+      {
+        "_comment": "Filters out all non white-listed properties from the payment method.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "input": [
+          {"key": "properties", "id": "505"},
+          {"key": "hydratedObject", "id": "131", "optional": true}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "132", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Pack payment method data into a property named 'paymentMethod'.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "paymentMethod", "id": "132", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "130", "optional": true}
+        ]
+      },
+      {
+        "_comment": "Merge the payment method back into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "130", "optional": true}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Request totals data based on the current checkout data.",
+
         "type": "pipeline",
         "id": "shopgate.checkout.getTotals.v1",
         "input": [
-          {"key": "checkout", "id": "10"}
+          {"key": "checkout", "id": "100"}
         ],
         "output": [
-          {"key": "currency", "id": "400"},
-          {"key": "total", "id": "401"},
-          {"key": "totals", "id": "402"}
+          {"key": "currency", "id": "141"},
+          {"key": "total", "id": "142"},
+          {"key": "totals", "id": "143"}
         ]
       },
       {
+        "_comment": "Pack totals into an object for later merge.",
+
         "type": "extension",
         "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/appendTotals.js",
+        "path": "@shopgate/checkout/checkout/packInput.js",
         "input": [
-          {"key": "checkout", "id": "10"},
-          {"key": "currency", "id": "400"},
-          {"key": "total", "id": "401"},
-          {"key": "totals", "id": "402"}
+          {"key": "currency", "id": "141"},
+          {"key": "total", "id": "142"},
+          {"key": "totals", "id": "143"}
         ],
         "output": [
-          {"key": "checkout", "id": "600"}
+          {"key": "data", "id": "140"}
         ]
       },
       {
+        "_comment": "Merge totals into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "140"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+      {
+        "_comment": "Pack currency into a it's own property of a checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "currency", "id": "141"}
+        ],
+        "output": [
+          {"key": "data", "id": "150"}
+        ]
+      },
+      {
+        "_comment": "Merge the currency property into the final checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "150"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "TODO: Remove this temporary step which creates all redundant properties, that the order-extension-pipeline asks for in validation (at the time).",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "additionalCheckoutFields", "value": {"taxAmount": 0}}],
+        "output": [{"key": "additionalCheckoutFields", "id": "160"}]
+      },
+      {
+        "_comment": "TODO: Remove this step when the static value step for 'additionalCheckoutFields' is removed. This step merges the additional fields into the resulting checkout object",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "160"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "Validates the checkout object as order to make sure all the data is present.",
+
         "type": "pipeline",
         "id": "shopgate.checkout.validate.v1",
         "input": [
-          {"key": "order", "id": "600"}
+          {"key": "order", "id": "100"}
         ],
         "output": []
       },
+
       {
+        "_comment": "Creates a real order out of the checkout data.",
+
         "type": "pipeline",
         "id": "shopgate.order.create.v1",
         "input": [
-          {"key": "order", "id": "600"}
+          {"key": "order", "id": "100"}
         ],
         "output": [
-          {"key": "orderId", "id": "20"}
+          {"key": "orderId", "id": "10"}
         ]
       },
+
       {
+        "_comment": "Empties the cart to avoid ordering it again.",
+
         "type": "pipeline",
         "id": "shopgate.cart.deleteCart.v1",
         "input": [],
         "output": []
       },
+
       {
+        "_comment": "Release the lock, so the order process is unblocked before the lock times out.",
+
         "type": "extension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/unlockUserCheckout.js",
         "input": [],
         "output": []
       },
+
       {
+        "_comment": "Handles all error responses, removes the checkout lock and generates a proper error for the frontend to process.",
+
         "type": "errorCatchExtension",
         "id": "@shopgate/checkout",
         "path": "@shopgate/checkout/checkout/handleError.js",
