@@ -4,16 +4,13 @@ import { checkoutEnter } from './action-factory';
 import { checkoutSuccess$, checkoutData$ } from './streams';
 import { getCheckout } from './selectors';
 import fetchTotals from './components/Totals/action';
-import config from './../config';
 
 export default (subscribe) => {
   const checkoutRouteDidEnter$ = routeDidEnter('/checkout');
 
   subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
     // Fire custom event, when checkout is entered to accept checkout data from checkout actors
-    dispatch(checkoutEnter({
-      currency: config.currency,
-    }));
+    dispatch(checkoutEnter());
 
     dispatch({
       type: 'SET_VIEW_TITLE',

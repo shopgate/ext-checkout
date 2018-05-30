@@ -6,12 +6,14 @@ import {
   CHECKOUT_SUCCESS,
   CHECKOUT_TOTALS,
 } from './action-types';
+import config from './../config';
 
 export default (state = {}, action) => {
   switch (action.type) {
     case CHECKOUT_ENTER:
       return {
         checkout: {
+          currency: config.currency,
           logs: [],
         },
         checkoutDisabled: true,
