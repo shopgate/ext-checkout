@@ -317,6 +317,56 @@
           {"key": "data", "id": "100"}
         ]
       },
+      {
+        "_comment": "Pack currency into a it's own property of a checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/packInput.js",
+        "input": [
+          {"key": "currency", "id": "141"}
+        ],
+        "output": [
+          {"key": "data", "id": "150"}
+        ]
+      },
+      {
+        "_comment": "Merge the currency property into the final checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "150"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+
+      {
+        "_comment": "TODO: Remove this temporary step which creates all redundant properties, that the order-extension-pipeline asks for in validation (at the time).",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "additionalCheckoutFields", "value": {"taxAmount": 0}}],
+        "output": [{"key": "additionalCheckoutFields", "id": "160"}]
+      },
+      {
+        "_comment": "TODO: Remove this step when the static value step for 'additionalCheckoutFields' is removed. This step merges the additional fields into the resulting checkout object",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "160"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
 
       {
         "_comment": "Validates the checkout object as order to make sure all the data is present.",
