@@ -28,6 +28,7 @@ export default (state = {}, action) => {
     case CHECKOUT_DATA: {
       const { data, ...actionRest } = action;
       return {
+        ...state,
         checkout: {
           ...state.checkout,
           [action.id]: data,
@@ -41,6 +42,7 @@ export default (state = {}, action) => {
 
     case CHECKOUT_FAIL:
       return {
+        ...state,
         checkout: {
           ...state.checkout,
           logs: [...state.checkout.logs, {
@@ -54,12 +56,14 @@ export default (state = {}, action) => {
 
     case CHECKOUT_TOTALS:
       return {
-        ...state,
-        logs: [...state.checkout.logs, {
-          type: 'totals',
-          time: new Date().toISOString(),
-          totals: action.totals,
-        }],
+        checkout: {
+          ...state.checkout,
+          logs: [...state.checkout.logs, {
+            type: 'totals',
+            time: new Date().toISOString(),
+            totals: action.totals,
+          }],
+        },
         checkoutDisabled: false,
         currency: action.currency,
         totals: action.totals,
