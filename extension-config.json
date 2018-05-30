@@ -4,7 +4,7 @@
   "configuration": {
     "currency": {
       "type": "static",
-      "destination": "backend",
+      "destination": "both",
       "params": {
         "value": "EUR"
       }
