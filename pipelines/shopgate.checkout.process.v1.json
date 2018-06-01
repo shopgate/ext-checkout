@@ -46,8 +46,8 @@
         "_comment": "Copy checkout object for modification.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "1"}
         ],
@@ -74,8 +74,8 @@
         "_comment": "Put user data into a single object for later use.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "id", "id": "112"},
           {"key": "mail", "id": "113"},
@@ -90,8 +90,8 @@
         "_comment": "Pack user data into a property named 'user' to attach to checkout.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "user", "id": "111"}
         ],
@@ -103,8 +103,8 @@
         "_comment": "Merge user data into the checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "110"}
@@ -157,8 +157,8 @@
         "_comment": "Filters out all non white-listed properties from the shipping method.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/filter.js",
         "input": [
           {"key": "properties", "id": "503"},
           {"key": "hydratedObject", "id": "121", "optional": true}
@@ -171,8 +171,8 @@
         "_comment": "Pack shipping method data into a property named 'shippingMethod'.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "shippingMethod", "id": "122", "optional": true}
         ],
@@ -184,8 +184,8 @@
         "_comment": "Merge the currently selected shipping method into the checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "120", "optional": true}
@@ -207,8 +207,8 @@
         "_comment": "Extract the single paymentMethodObject.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/unpackInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/unpack.js",
         "input": [
           {"key": "properties", "id": "504"},
           {"key": "packedInput", "id": "100"}
@@ -236,8 +236,8 @@
         "_comment": "Filters out all non white-listed properties from the payment method.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/filterInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/filter.js",
         "input": [
           {"key": "properties", "id": "505"},
           {"key": "hydratedObject", "id": "131", "optional": true}
@@ -250,8 +250,8 @@
         "_comment": "Pack payment method data into a property named 'paymentMethod'.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "paymentMethod", "id": "132", "optional": true}
         ],
@@ -263,8 +263,8 @@
         "_comment": "Merge the payment method back into the checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "130", "optional": true}
@@ -292,8 +292,8 @@
         "_comment": "Pack totals into an object for later merge.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "currency", "id": "141"},
           {"key": "total", "id": "142"},
@@ -307,8 +307,8 @@
         "_comment": "Merge totals into the checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "140"}
@@ -321,8 +321,8 @@
         "_comment": "Pack currency into a it's own property of a checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/packInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
         "input": [
           {"key": "currency", "id": "141"}
         ],
@@ -334,8 +334,8 @@
         "_comment": "Merge the currency property into the final checkout object.",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "150"}
@@ -357,8 +357,8 @@
         "_comment": "TODO: Remove this step when the static value step for 'additionalCheckoutFields' is removed. This step merges the additional fields into the resulting checkout object",
 
         "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/mergeInput.js",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
           {"key": "second", "id": "160"}
