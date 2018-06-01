@@ -5,7 +5,7 @@ const totalsSchema = Joi.array().min(1).items(
   Joi.object().keys({
     id: Joi.string().required(),
     label: Joi.string().required(),
-    amount: Joi.number().integer()
+    amount: Joi.number().required()
   })
 )
 

@@ -11,12 +11,14 @@
 module.exports = async (context, input) => {
   const totals = input.totals
 
-  const total = input.totals
+  let total = input.totals
     .map(tot => tot.amount)
     .reduce(
       (sum, amount) => sum + amount,
       0
     )
+
+  total = Math.round(total * 100) / 100
 
   totals.push({
     id: 'total',
