@@ -3,25 +3,27 @@ import PropTypes from 'prop-types';
 import Grid from '@shopgate/pwa-common/components/Grid';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import connect from './connector';
+import { textRight } from './style';
 
 /**
  * @param {Object} props props
  * @return {*}
  */
 const Totals = ({ currency, totals }) => (
-  <Grid>
+  <Fragment>
     {
       totals.map(total => (
         <Fragment key={total.id}>
-          {/* @TODO align li items as table view */}
-          <Grid.Item grow={1}>{total.label}</Grid.Item>
-          <Grid.Item grow={1}>
-            <I18n.Price price={total.amount} currency={currency} />
-          </Grid.Item>
+          <Grid>
+            <Grid.Item grow={1}>{total.label}</Grid.Item>
+            <Grid.Item grow={999} schrink={0} className={textRight}>
+              <I18n.Price price={total.amount} currency={currency} />
+            </Grid.Item>
+          </Grid>
         </Fragment>
       ))
     }
-  </Grid>
+  </Fragment>
 );
 
 Totals.propTypes = {
