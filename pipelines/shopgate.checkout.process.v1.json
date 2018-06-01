@@ -196,22 +196,12 @@
       },
 
       {
-        "_comment": "Defines a payment method property name to extract from the checkout object.",
+        "_comment": "Request the currently selected payment method from the incoming checkout.",
 
-        "type": "staticValue",
-        "input": [],
-        "values": [{"key": "paymentMethodPropertyName", "value": ["paymentMethod"]}],
-        "output": [{"key": "paymentMethodPropertyName", "id": "504"}]
-      },
-      {
-        "_comment": "Extract the single paymentMethodObject.",
-
-        "type": "extension",
-        "id": "@shopgate/util",
-        "path": "@shopgate/util/util/unpack.js",
+        "type": "pipeline",
+        "id": "shopgate.checkout.getPaymentMethod.v1",
         "input": [
-          {"key": "properties", "id": "504"},
-          {"key": "packedInput", "id": "100"}
+          {"key": "checkout", "id": "100"}
         ],
         "output": [
           {"key": "paymentMethod", "id": "131", "optional": true}
@@ -229,7 +219,7 @@
           "taxAmount"
         ]}],
         "output": [
-          {"key": "paymentMethodPropertyFilter", "id": "505"}
+          {"key": "paymentMethodPropertyFilter", "id": "504"}
         ]
       },
       {
@@ -239,7 +229,7 @@
         "id": "@shopgate/util",
         "path": "@shopgate/util/util/filter.js",
         "input": [
-          {"key": "properties", "id": "505"},
+          {"key": "properties", "id": "504"},
           {"key": "hydratedObject", "id": "131", "optional": true}
         ],
         "output": [
@@ -260,7 +250,7 @@
         ]
       },
       {
-        "_comment": "Merge the payment method back into the checkout object.",
+        "_comment": "Merge the currently selected payment method into the checkout object.",
 
         "type": "extension",
         "id": "@shopgate/util",
