@@ -265,93 +265,62 @@
       },
 
       {
-        "_comment": "Request totals data based on the current checkout data.",
+        "_comment": "Add totals to the checkout data.",
 
         "type": "pipeline",
-        "id": "shopgate.checkout.getTotals.v1",
+        "id": "shopgate.checkout.processTotals.v1",
         "input": [
           {"key": "checkout", "id": "100"}
         ],
         "output": [
-          {"key": "currency", "id": "141"},
-          {"key": "total", "id": "142"},
-          {"key": "totals", "id": "143"}
+          {"key": "checkout", "id": "100"}
         ]
       },
+
       {
-        "_comment": "Pack totals into an object for later merge.",
+        "_comment": "Get the shop config to read the currency.",
 
         "type": "extension",
-        "id": "@shopgate/util",
-        "path": "@shopgate/util/util/pack.js",
-        "input": [
-          {"key": "currency", "id": "141"},
-          {"key": "total", "id": "142"},
-          {"key": "totals", "id": "143"}
-        ],
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getConfig.js",
+        "input": [],
         "output": [
-          {"key": "data", "id": "140"}
+          {"key": "config", "id": "151"}
         ]
       },
       {
-        "_comment": "Merge totals into the checkout object.",
-
-        "type": "extension",
-        "id": "@shopgate/util",
-        "path": "@shopgate/util/util/merge.js",
-        "input": [
-          {"key": "first", "id": "100"},
-          {"key": "second", "id": "140"}
-        ],
-        "output": [
-          {"key": "data", "id": "100"}
-        ]
-      },
-      {
-        "_comment": "Pack currency into a it's own property of a checkout object.",
-
-        "type": "extension",
-        "id": "@shopgate/util",
-        "path": "@shopgate/util/util/pack.js",
-        "input": [
-          {"key": "currency", "id": "141"}
-        ],
-        "output": [
-          {"key": "data", "id": "150"}
-        ]
-      },
-      {
-        "_comment": "Merge the currency property into the final checkout object.",
-
-        "type": "extension",
-        "id": "@shopgate/util",
-        "path": "@shopgate/util/util/merge.js",
-        "input": [
-          {"key": "first", "id": "100"},
-          {"key": "second", "id": "150"}
-        ],
-        "output": [
-          {"key": "data", "id": "100"}
-        ]
-      },
-
-      {
-        "_comment": "TODO: Remove this temporary step which creates all redundant properties, that the order-extension-pipeline asks for in validation (at the time).",
+        "_comment": "Defines a list of properties to keep from the config, which is only currency.",
 
         "type": "staticValue",
         "input": [],
-        "values": [{"key": "additionalCheckoutFields", "value": {"taxAmount": 0}}],
-        "output": [{"key": "additionalCheckoutFields", "id": "160"}]
+        "values": [{"key": "currencyPropertyFilter", "value": ["currency"]}],
+        "output": [
+          {"key": "currencyPropertyFilter", "id": "505"}
+        ]
       },
       {
-        "_comment": "TODO: Remove this step when the static value step for 'additionalCheckoutFields' is removed. This step merges the additional fields into the resulting checkout object",
+        "_comment": "Filters out all non white-listed properties from the config to get the currency only.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/filter.js",
+        "input": [
+          {"key": "properties", "id": "505"},
+          {"key": "hydratedObject", "id": "151"}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "152"}
+        ]
+      },
+      {
+        "_comment": "Merge the currency property into the checkout object.",
 
         "type": "extension",
         "id": "@shopgate/util",
         "path": "@shopgate/util/util/merge.js",
         "input": [
           {"key": "first", "id": "100"},
-          {"key": "second", "id": "160"}
+          {"key": "second", "id": "152"}
         ],
         "output": [
           {"key": "data", "id": "100"}
@@ -370,7 +339,7 @@
       },
 
       {
-        "_comment": "Creates a real order out of the checkout data.",
+        "_comment": "Creates an actual order of the checkout data.",
 
         "type": "pipeline",
         "id": "shopgate.order.create.v1",

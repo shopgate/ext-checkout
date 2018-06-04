@@ -7,20 +7,10 @@
       {"key": "checkout", "id": "10"}
     ],
     "output": [
-      {"key": "currency", "id": "20"},
       {"key": "totals", "id": "21"},
       {"key": "total", "id": "22"}
     ],
     "steps": [
-      {
-        "type": "extension",
-        "id": "@shopgate/checkout",
-        "path": "@shopgate/checkout/checkout/getCurrency.js",
-        "input": [],
-        "output": [
-          {"key": "currency", "id": "20"}
-        ]
-      },
       {
         "type": "staticValue",
         "input": [],
