@@ -5,6 +5,7 @@ import {
   CHECKOUT_PROCESS,
   CHECKOUT_SUCCESS,
   CHECKOUT_TOTALS,
+  CHECKOUT_FETCH_TOTALS,
 } from './action-types';
 import config from './../config';
 
@@ -21,6 +22,7 @@ export default (state = {}, action) => {
       };
 
     case CHECKOUT_PROCESS:
+    case CHECKOUT_FETCH_TOTALS:
       // Disable checkout button
       return {
         ...state,
