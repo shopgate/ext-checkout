@@ -1,0 +1,77 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.processCurrency.v1",
+    "public": false,
+    "input": [
+      {"key": "checkout", "id": "1"}
+    ],
+    "output": [
+      {"key": "checkout", "id": "100"}
+    ],
+    "steps": [
+      {
+        "_comment": "Copy checkout object for modification.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
+        "input": [
+          {"key": "first", "id": "1"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+      {
+        "_comment": "Get the shop config to read the currency.",
+
+        "type": "extension",
+        "id": "@shopgate/checkout",
+        "path": "@shopgate/checkout/checkout/getConfig.js",
+        "input": [],
+        "output": [
+          {"key": "config", "id": "151"}
+        ]
+      },
+      {
+        "_comment": "Defines a list of properties to keep from the config, which is only currency.",
+
+        "type": "staticValue",
+        "input": [],
+        "values": [{"key": "currencyPropertyFilter", "value": ["currency"]}],
+        "output": [
+          {"key": "currencyPropertyFilter", "id": "505"}
+        ]
+      },
+      {
+        "_comment": "Filters out all non white-listed properties from the config to get the currency only.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/filter.js",
+        "input": [
+          {"key": "properties", "id": "505"},
+          {"key": "hydratedObject", "id": "151"}
+        ],
+        "output": [
+          {"key": "filteredObject", "id": "152"}
+        ]
+      },
+      {
+        "_comment": "Merge the currency property into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
+        "input": [
+          {"key": "first", "id": "100"},
+          {"key": "second", "id": "152"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      }
+    ]
+  }
+}
