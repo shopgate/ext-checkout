@@ -1,17 +1,14 @@
 import { routeDidEnter } from '@shopgate/pwa-common/streams/history';
 import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
-import { checkoutEnter } from './action-factory';
-import { checkoutSuccess$, checkoutData$ } from './streams';
-import { getCheckout } from './selectors';
+import { checkoutEnter, checkoutState } from './action-factory';
+import { checkoutSuccess$, checkoutState$, checkoutData$ } from './streams';
 import fetchTotals from './components/Totals/action';
+import { getCheckout } from './selectors';
 
 export default (subscribe) => {
   const checkoutRouteDidEnter$ = routeDidEnter('/checkout');
 
   subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
-    // Fire custom event, when checkout is entered to accept checkout data from checkout actors
-    dispatch(checkoutEnter());
-
     dispatch({
       type: 'SET_VIEW_TITLE',
       title: 'Checkout',
@@ -21,6 +18,9 @@ export default (subscribe) => {
       type: 'TOGGLE_NAVIGATOR_CART_ICON',
       active: false,
     });
+
+    // Fire custom event, when checkout is entered to accept checkout data from checkout actors
+    dispatch(checkoutEnter());
   });
 
   subscribe(checkoutSuccess$, ({ dispatch }) => {
@@ -28,13 +28,13 @@ export default (subscribe) => {
     dispatch(replaceHistory({ pathname: '/checkout/success' }));
   });
 
-  /**
-   * Every time when checkout form changes, we need to fetch checkout totals
-   */
   subscribe(checkoutData$, ({ dispatch, getState }) => {
     setTimeout(() => {
-      const checkout = getCheckout(getState());
-      fetchTotals(checkout)(dispatch);
-    }, 500);
+      dispatch(checkoutState(getCheckout(getState())));
+    }, 100);
+  });
+
+  subscribe(checkoutState$, ({ dispatch, action }) => {
+    fetchTotals(action.checkout)(dispatch);
   });
 };

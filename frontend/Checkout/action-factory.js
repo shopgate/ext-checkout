@@ -4,6 +4,8 @@ import {
   CHECKOUT_FAIL,
   CHECKOUT_PROCESS,
   CHECKOUT_TOTALS,
+  CHECKOUT_FETCH_TOTALS,
+  CHECKOUT_STATE,
 } from './action-types';
 
 /**
@@ -11,6 +13,15 @@ import {
  */
 export const checkoutEnter = () => ({
   type: CHECKOUT_ENTER,
+});
+
+/**
+ * @param {Object} checkout checkout
+ * @return {{type: string, checkout: *}}
+ */
+export const checkoutState = checkout => ({
+  type: CHECKOUT_STATE,
+  checkout,
 });
 
 /**
@@ -36,6 +47,13 @@ export const checkoutFail = error => ({
  */
 export const checkoutProcess = () => ({
   type: CHECKOUT_PROCESS,
+});
+
+/**
+ * @return {{type: string}}
+ */
+export const checkoutFetchTotals = () => ({
+  type: CHECKOUT_FETCH_TOTALS,
 });
 
 /**

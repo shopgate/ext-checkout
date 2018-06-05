@@ -59,15 +59,15 @@ class Checkout extends Component {
             </Fragment>
 
             <Fragment>
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE} />
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD} />
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER} />
-            </Fragment>
-
-            <Fragment>
               <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE} />
               <Portal name={portals.CHECKOUT_SHIPPING_METHOD} />
               <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER} />
+            </Fragment>
+
+            <Fragment>
+              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE} />
+              <Portal name={portals.CHECKOUT_PAYMENT_METHOD} />
+              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER} />
             </Fragment>
 
             <Fragment>
