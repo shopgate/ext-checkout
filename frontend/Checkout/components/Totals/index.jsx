@@ -32,12 +32,10 @@ const Totals = ({ totals }) => (
 );
 
 Totals.propTypes = {
-  currency: PropTypes.string,
   totals: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 Totals.defaultProps = {
-  currency: '',
   totals: [],
 };
 

@@ -61,7 +61,7 @@
 
         "type": "pipeline",
         "id": "shopgate.checkout.processUser.v1",
-        "trusted": true,
+        "trusted": false,
         "input": [
           {"key": "checkout", "id": "100"}
         ],

@@ -12,9 +12,4 @@ export const getCheckoutDisabled = state => state.extensions['@shopgate/checkout
  * @param {Object} state state
  * @return {*}
  */
-export const getCheckoutCurrency = state => state.extensions['@shopgate/checkout/CheckoutReducers'].currency;
-/**
- * @param {Object} state state
- * @return {*}
- */
 export const getCheckoutTotals = state => state.extensions['@shopgate/checkout/CheckoutReducers'].totals;
