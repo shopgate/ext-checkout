@@ -1,14 +1,14 @@
 /**
- * @typedef {Object} GetCurrencyResult
+ * @typedef {Object} GetConfigResult
  * @property {string} currency
  */
 
 /**
  * @param {SDKContext} context
- * @returns {Promise<GetCurrencyResult>}
+ * @returns {Promise<GetConfigResult>}
  */
 module.exports = async (context) => {
   return {
-    currency: context.config.currency
+    config: context.config
   }
 }

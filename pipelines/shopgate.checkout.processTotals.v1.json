@@ -1,0 +1,69 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.checkout.processTotals.v1",
+    "public": false,
+    "input": [
+      {"key": "checkout", "id": "1"}
+    ],
+    "output": [
+      {"key": "checkout", "id": "100"}
+    ],
+    "steps": [
+      {
+        "_comment": "Copy checkout object for modification.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
+        "input": [
+          {"key": "first", "id": "1"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      },
+      {
+        "_comment": "Request totals data based on the current checkout data.",
+
+        "type": "pipeline",
+        "id": "shopgate.checkout.getTotals.v1",
+        "input": [
+          {"key": "checkout", "id": "100"}
+        ],
+        "output": [
+          {"key": "total", "id": "141"},
+          {"key": "totals", "id": "142"}
+        ]
+      },
+      {
+        "_comment": "Pack totals into an object for later merge.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/pack.js",
+        "input": [
+          {"key": "total", "id": "141"},
+          {"key": "totals", "id": "142"}
+        ],
+        "output": [
+          {"key": "data", "id": "140"}
+        ]
+      },
+      {
+        "_comment": "Merge totals into the checkout object.",
+
+        "type": "extension",
+        "id": "@shopgate/util",
+        "path": "@shopgate/util/util/merge.js",
+        "input": [
+          {"key": "first", "id": "1"},
+          {"key": "second", "id": "140"}
+        ],
+        "output": [
+          {"key": "data", "id": "100"}
+        ]
+      }
+    ]
+  }
+}
