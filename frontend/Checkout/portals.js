@@ -10,6 +10,9 @@ const PROCESS = 'process';
 const BEFORE = 'before';
 const AFTER = 'after';
 
+export const CHECKOUT_BEFORE = `${CHECKOUT}.${BEFORE}`;
+export const CHECKOUT_AFTER = `${CHECKOUT}.${AFTER}`;
+
 export const CHECKOUT_CART_BEFORE = `${CHECKOUT}.${CART}.${BEFORE}`;
 export const CHECKOUT_CART = `${CHECKOUT}.${CART}`;
 export const CHECKOUT_CART_AFTER = `${CHECKOUT}.${CART}.${AFTER}`;

@@ -42,9 +42,7 @@ class Checkout extends Component {
         <View>
           <section className={style.container} data-test-id="CheckoutPage">
             <Fragment>
-              <Portal name={portals.CHECKOUT_CART_BEFORE} />
-              <Portal name={portals.CHECKOUT_CART} />
-              <Portal name={portals.CHECKOUT_CART_AFTER} />
+              <Portal name={portals.CHECKOUT_BEFORE} />
             </Fragment>
 
             <Fragment>
@@ -78,6 +76,12 @@ class Checkout extends Component {
             </Fragment>
 
             <Fragment>
+              <Portal name={portals.CHECKOUT_CART_BEFORE} />
+              <Portal name={portals.CHECKOUT_CART} />
+              <Portal name={portals.CHECKOUT_CART_AFTER} />
+            </Fragment>
+
+            <Fragment>
               <Portal name={portals.CHECKOUT_TOTALS_BEFORE} />
               <Portal name={portals.CHECKOUT_TOTALS}>
                 <Totals />
@@ -101,6 +105,10 @@ class Checkout extends Component {
                 </div>
               </Portal>
               <Portal name={portals.CHECKOUT_PROCESS_AFTER} />
+            </Fragment>
+
+            <Fragment>
+              <Portal name={portals.CHECKOUT_AFTER} />
             </Fragment>
 
           </section>
