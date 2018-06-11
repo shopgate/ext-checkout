@@ -32,6 +32,17 @@
       "id": "CheckoutReducers",
       "path": "frontend/Checkout/reducers.js",
       "type": "reducers"
+    },
+    {
+      "id": "en-US",
+      "path": "frontend/locale/en-US.json",
+      "type": "translations"
+    },
+    {
+      "id": "de-DE",
+      "path": "frontend/locale/de-DE.json",
+      "type": "translations"
     }
+
   ]
 }

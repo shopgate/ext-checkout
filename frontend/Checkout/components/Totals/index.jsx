@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { App } from '@shopgate/pwa-common/context';
 import Grid from '@shopgate/pwa-common/components/Grid';
 import I18n from '@shopgate/pwa-common/components/I18n';
 import connect from './connector';
-import { textRight } from './style';
+import * as style from './style';
 
 /**
  * @param {Object} props props
@@ -13,20 +13,26 @@ import { textRight } from './style';
 const Totals = ({ totals }) => (
   <App>
     {({ checkout }) => (
-      <Fragment>
+      <div className={style.container}>
         {
           totals.map(total => (
-            <Fragment key={total.id}>
-              <Grid>
-                <Grid.Item grow={1}>{total.label}</Grid.Item>
-                <Grid.Item grow={999} schrink={0} className={textRight}>
-                  <I18n.Price price={total.amount} currency={checkout.currency} />
-                </Grid.Item>
-              </Grid>
-            </Fragment>
+            <Grid key={total.id}>
+              <Grid.Item
+                grow={1}
+                className={total.id === 'total' ? style.total : style.subTotal}
+              >
+                {total.label}
+              </Grid.Item>
+              <Grid.Item
+                grow={0}
+                className={total.id === 'total' ? style.total : style.subTotal}
+              >
+                <I18n.Price price={total.amount} currency={checkout.currency} />
+              </Grid.Item>
+            </Grid>
           ))
         }
-      </Fragment>
+      </div>
     )}
   </App>
 );

@@ -69,7 +69,6 @@ export default (state = {}, action) => {
           }],
         },
         checkoutDisabled: false,
-        currency: action.currency,
         totals: action.totals,
       };
 

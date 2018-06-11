@@ -2,10 +2,11 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '@shopgate/pwa-common/context';
 import Portal from '@shopgate/pwa-common/components/Portal';
-import Button from '@shopgate/pwa-common/components/Button';
+import I18n from '@shopgate/pwa-common/components/I18n';
+import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
 import * as portals from './portals';
 import connect from './connector';
-import styles from './style';
+import * as style from './style';
 import Totals from './components/Totals';
 
 /**
@@ -39,7 +40,7 @@ class Checkout extends Component {
     return (
       <AppContext.Provider value={{ checkout }}>
         <View>
-          <section className={styles.container} data-test-id="CheckoutPage">
+          <section className={style.container} data-test-id="CheckoutPage">
             <Fragment>
               <Portal name={portals.CHECKOUT_CART_BEFORE} />
               <Portal name={portals.CHECKOUT_CART} />
@@ -87,16 +88,16 @@ class Checkout extends Component {
             <Fragment>
               <Portal name={portals.CHECKOUT_PROCESS_BEFORE} />
               <Portal name={portals.CHECKOUT_PROCESS}>
-                <div className={styles.buttonWrapper}>
-                  <Button
-                    className={styles.button}
+                <div className={style.buttonWrapper}>
+                  <RippleButton
                     type="secondary"
                     disabled={this.props.disabled}
                     onClick={this.handleProcessCheckout}
                     data-test-id="CheckoutButton"
+                    className={style.button}
                   >
-                    checkout.button
-                  </Button>
+                    <I18n.Text string="checkout.button" />
+                  </RippleButton>
                 </div>
               </Portal>
               <Portal name={portals.CHECKOUT_PROCESS_AFTER} />
