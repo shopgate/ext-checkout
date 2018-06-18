@@ -41,6 +41,7 @@ export default (state = {}, action) => {
             time: new Date().toISOString(),
           }],
         },
+        checkoutDisabled: true,
       };
     }
 
