@@ -74,7 +74,14 @@ export default (state = {}, action) => {
       };
 
     case CHECKOUT_SUCCESS:
-      return {};
+      return {
+        ...state,
+        checkout: {
+          currency: config.currency,
+          logs: [],
+        },
+        checkoutDisabled: true,
+      };
 
     default:
       return state;

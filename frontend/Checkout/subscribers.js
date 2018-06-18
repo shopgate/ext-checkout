@@ -1,4 +1,4 @@
-import { routeDidEnter } from '@shopgate/pwa-common/streams/history';
+import { routeDidChange$ } from '@shopgate/pwa-common/streams/history';
 import replaceHistory from '@shopgate/pwa-common/actions/history/replaceHistory';
 import { checkoutEnter, checkoutState } from './action-factory';
 import { checkoutSuccess$, checkoutState$, checkoutData$ } from './streams';
@@ -6,7 +6,7 @@ import fetchTotals from './components/Totals/action';
 import { getCheckout } from './selectors';
 
 export default (subscribe) => {
-  const checkoutRouteDidEnter$ = routeDidEnter('/checkout');
+  const checkoutRouteDidEnter$ = routeDidChange$.filter(({ pathname }) => pathname === '/checkout');
 
   subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
     dispatch({
