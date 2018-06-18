@@ -4,25 +4,21 @@ import { themeConfig } from '@shopgate/pwa-common/helpers/config';
 const { variables, colors } = themeConfig;
 
 const container = css({
-  flexGrow: 1,
-  padding: `${variables.gap.small * 3}px ${variables.gap.big}px`,
+  padding: variables.gap.big,
 }).toString();
 
 const headline = css({
-  fontSize: '2.1875rem',
-  lineHeight: 1,
   fontWeight: 500,
 }).toString();
 
-const subline = css({
-  fontSize: '1.125rem',
-  color: colors.shade6,
-  marginBottom: variables.gap.xsmall,
+const subLine = css({
+  fontSize: '0,875rem',
+  color: colors.shade3,
+  margin: `${variables.gap.big}px 0`,
 }).toString();
 
 const buttonWrapper = css({
-  paddingTop: variables.gap.big * 2,
-  paddingBottom: variables.gap.big * 1.5,
+  margin: `${variables.gap.xbig}px 0`,
 }).toString();
 
 const button = css({
@@ -32,7 +28,7 @@ const button = css({
 export default {
   container,
   headline,
-  subline,
+  subLine,
   buttonWrapper,
   button,
 };

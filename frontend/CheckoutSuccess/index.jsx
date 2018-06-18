@@ -1,69 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@shopgate/pwa-common/components/Portal';
-import Button from '@shopgate/pwa-common/components/Button';
+import RippleButton from '@shopgate/pwa-ui-shared/RippleButton';
+import I18n from '@shopgate/pwa-common/components/I18n';
 import * as portals from './portals';
 import connect from './connector';
 import styles from './style';
 
 /**
- * Checkout success component
+ * @param {Object} props props
+ * @return {*}
  */
-class CheckoutSuccess extends Component {
-  static propTypes = {
-    continueShopping: PropTypes.func.isRequired,
-  }
+const CheckoutSuccess = ({ View, continueShopping }) => (
+  <View>
+    <section className={styles.container} data-test-id="CheckoutSuccessPage">
+      <div className={styles.headline}>
+        <I18n.Text string="checkout.success.title" />
+      </div>
 
-  /**
-   * @param {Object} event App event
-   */
-  handleContinueShopping = (event) => {
-    event.preventDefault();
-    this.props.continueShopping();
-  }
+      <Portal name={portals.CHECKOUT_SUCCESS_BEFORE} />
+      <Portal name={portals.CHECKOUT_SUCCESS}>
+        <div className={styles.subLine}>
+          <I18n.Text string="checkout.success.text" />
+        </div>
+      </Portal>
+      <Portal name={portals.CHECKOUT_SUCCESS_AFTER} />
 
-  /**
-   * @return {*}
-   */
-  render() {
-    // eslint-disable-next-line react/prop-types
-    const { View } = this.props;
-    return (
-      <View>
-        <section className={styles.container} data-test-id="CheckoutSuccessPage">
-          <div className={styles.headline}>
-            Thank you for your oder
-          </div>
+      <Portal name={portals.CHECKOUT_SUCCESS_CONTINUE}>
+        <div className={styles.buttonWrapper}>
+          <RippleButton
+            type="secondary"
+            onClick={continueShopping}
+            data-test-id="CheckoutSuccessButton"
+            className={styles.button}
+          >
+            <I18n.Text string="checkout.success.continueShopping" />
+          </RippleButton>
+        </div>
+      </Portal>
+    </section>
+  </View>
+);
 
-          <div>
-            <Portal name={portals.CHECKOUT_SUCCESS_BEFORE} />
-            <Portal name={portals.CHECKOUT_SUCCESS}>
-              <div className={styles.subline}>
-                Your order is received.
-              </div>
-            </Portal>
-            <Portal name={portals.CHECKOUT_SUCCESS_AFTER} />
-          </div>
-
-          <div>
-            <Portal name={portals.CHECKOUT_SUCCESS_CONTINUE}>
-              <div className={styles.buttonWrapper} >
-                <Button
-                  className={styles.button}
-                  type="secondary"
-                  onClick={this.handleContinueShopping}
-                  data-test-id="CheckoutSuccessButton"
-                >
-                  Continue shopping
-                </Button>
-              </div>
-            </Portal>
-          </div>
-
-        </section>
-      </View>
-    );
-  }
-}
+CheckoutSuccess.propTypes = {
+  continueShopping: PropTypes.func.isRequired,
+  View: PropTypes.node.isRequired,
+};
 
 export default connect(CheckoutSuccess);
