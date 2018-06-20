@@ -44,7 +44,7 @@ const CheckoutSuccess = ({ View, continueShopping }) => (
 
 CheckoutSuccess.propTypes = {
   continueShopping: PropTypes.func.isRequired,
-  View: PropTypes.node.isRequired,
+  View: PropTypes.func.isRequired,
 };
 
 export default connect(CheckoutSuccess);
