@@ -31,11 +31,22 @@ export default (state = {}, action) => {
 
     case CHECKOUT_DATA: {
       const { data, ...actionRest } = action;
+      let checkout;
+      if (data === null) {
+        // Unset data
+        const { [action.id]: ignore, ...restCheckout } = state.checkout;
+        checkout = restCheckout;
+      } else {
+        // Set data
+        checkout = {
+          ...state.checkout,
+          [action.id]: data,
+        };
+      }
       return {
         ...state,
         checkout: {
-          ...state.checkout,
-          [action.id]: data,
+          ...checkout,
           logs: [...state.checkout.logs, {
             ...actionRest,
             time: new Date().toISOString(),
