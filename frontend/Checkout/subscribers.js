@@ -8,7 +8,7 @@ import { getCheckout } from './selectors';
 export default (subscribe) => {
   const checkoutRouteDidEnter$ = routeDidChange$.filter(({ pathname }) => pathname === '/checkout');
 
-  subscribe(checkoutRouteDidEnter$, ({ dispatch }) => {
+  subscribe(checkoutRouteDidEnter$, ({ dispatch, getState }) => {
     dispatch({
       type: 'SET_VIEW_TITLE',
       title: 'Checkout',
@@ -20,7 +20,7 @@ export default (subscribe) => {
     });
 
     // Fire custom event, when checkout is entered to accept checkout data from checkout actors
-    dispatch(checkoutEnter());
+    dispatch(checkoutEnter(getCheckout(getState())));
   });
 
   subscribe(checkoutSuccess$, ({ dispatch }) => {
