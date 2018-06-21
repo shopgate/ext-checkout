@@ -1,6 +1,5 @@
 import {
   CHECKOUT_DATA,
-  CHECKOUT_ENTER,
   CHECKOUT_FAIL,
   CHECKOUT_PROCESS,
   CHECKOUT_SUCCESS,
@@ -11,16 +10,6 @@ import config from './../config';
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case CHECKOUT_ENTER:
-      return {
-        checkout: {
-          currency: config.currency,
-          logs: [],
-        },
-        checkoutDisabled: true,
-        ...state,
-      };
-
     case CHECKOUT_PROCESS:
     case CHECKOUT_FETCH_TOTALS:
       // Disable checkout button
@@ -31,11 +20,22 @@ export default (state = {}, action) => {
 
     case CHECKOUT_DATA: {
       const { data, ...actionRest } = action;
+      let checkout;
+      if (data === null) {
+        // Unset data
+        const { [action.id]: ignore, ...restCheckout } = state.checkout;
+        checkout = restCheckout;
+      } else {
+        // Set data
+        checkout = {
+          ...state.checkout,
+          [action.id]: data,
+        };
+      }
       return {
         ...state,
         checkout: {
-          ...state.checkout,
-          [action.id]: data,
+          ...checkout,
           logs: [...state.checkout.logs, {
             ...actionRest,
             time: new Date().toISOString(),
@@ -84,6 +84,13 @@ export default (state = {}, action) => {
       };
 
     default:
-      return state;
+      return {
+        checkout: {
+          currency: config.currency,
+          logs: [],
+        },
+        checkoutDisabled: true,
+        ...state,
+      };
   }
 };

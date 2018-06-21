@@ -9,10 +9,12 @@ import {
 } from './action-types';
 
 /**
- * @return {{type: string}}
+ * @param {Object} checkout checkout
+ * @return {{type: string, checkout: *}}
  */
-export const checkoutEnter = () => ({
+export const checkoutEnter = checkout => ({
   type: CHECKOUT_ENTER,
+  checkout,
 });
 
 /**

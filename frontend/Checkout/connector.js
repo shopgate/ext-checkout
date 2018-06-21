@@ -1,4 +1,4 @@
-import connect from '@shopgate/pwa-common/components/Router/helpers/connect';
+import { connect } from 'react-redux';
 import processCheckout from './action';
 import { getCheckout, getCheckoutDisabled } from './selectors';
 
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => ({
   processCheckout: checkout => dispatch(processCheckout(checkout)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true});
