@@ -28,8 +28,10 @@ export default (subscribe) => {
     dispatch(replaceHistory({ pathname: '/checkout/success' }));
   });
 
+  let checkoutStateTimeout = null;
   subscribe(checkoutData$, ({ dispatch, getState }) => {
-    setTimeout(() => {
+    clearTimeout(checkoutStateTimeout);
+    checkoutStateTimeout = setTimeout(() => {
       dispatch(checkoutState(getCheckout(getState())));
     }, 100);
   });
