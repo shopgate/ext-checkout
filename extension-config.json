@@ -10,7 +10,6 @@
       }
     },
     "requiredData": {
-      "_comment": "List of required keys, before checkout can be processed",
       "type": "static",
       "destination": "frontend",
       "params": {
