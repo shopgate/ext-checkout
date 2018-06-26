@@ -6,7 +6,19 @@ import {
   CHECKOUT_TOTALS,
   CHECKOUT_FETCH_TOTALS,
 } from './action-types';
+/** @type {{currency: string, requiredData: Array}} */
 import config from './../config';
+
+/**
+ * Check if all reguired data is present
+ * @param {Object} checkout checkout
+ * @return {boolean}
+ */
+const isCheckoutAvailable = (checkout) => {
+  const { requiredData } = config;
+  const checkoutKeys = Object.keys(checkout);
+  return requiredData.filter(r => !checkoutKeys.includes(r)).length > 0;
+};
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -41,7 +53,7 @@ export default (state = {}, action) => {
             time: new Date().toISOString(),
           }],
         },
-        checkoutDisabled: true,
+        checkoutDisabled: isCheckoutAvailable(checkout),
       };
     }
 
@@ -69,7 +81,7 @@ export default (state = {}, action) => {
             totals: action.totals,
           }],
         },
-        checkoutDisabled: false,
+        checkoutDisabled: isCheckoutAvailable(state.checkout),
         totals: action.totals,
       };
 

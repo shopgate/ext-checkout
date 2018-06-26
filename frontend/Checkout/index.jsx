@@ -38,82 +38,80 @@ class Checkout extends Component {
     // eslint-disable-next-line react/prop-types
     const { View, checkout } = this.props;
     return (
-      <AppContext.Provider value={{ checkout }}>
-        <View>
-          <section className={style.container} data-test-id="CheckoutPage">
-            <Fragment>
-              <Portal name={portals.CHECKOUT_BEFORE} />
-            </Fragment>
+      <AppContext.Consumer>
+        {context => (
+          // eslint-disable-next-line extra-rules/no-single-line-objects
+          <AppContext.Provider value={{ ...context, checkout }}>
+            <View>
+              <section className={style.container} data-test-id="CheckoutPage">
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_BEFORE} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE} />
-              <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS} />
-              <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_BEFORE} />
+                  <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS} />
+                  <Portal name={portals.CHECKOUT_SHIPPING_ADDRESS_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE} />
-              <Portal name={portals.CHECKOUT_BILLING_ADDRESS} />
-              <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_BILLING_ADDRESS_BEFORE} />
+                  <Portal name={portals.CHECKOUT_BILLING_ADDRESS} />
+                  <Portal name={portals.CHECKOUT_BILLING_ADDRESS_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE} />
-              <Portal name={portals.CHECKOUT_SHIPPING_METHOD} />
-              <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_SHIPPING_METHOD_BEFORE} />
+                  <Portal name={portals.CHECKOUT_SHIPPING_METHOD} />
+                  <Portal name={portals.CHECKOUT_SHIPPING_METHOD_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE} />
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD} />
-              <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_PAYMENT_METHOD_BEFORE} />
+                  <Portal name={portals.CHECKOUT_PAYMENT_METHOD} />
+                  <Portal name={portals.CHECKOUT_PAYMENT_METHOD_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_BEFORE} />
-              <Portal name={portals.CHECKOUT_CUSTOM_FIELDS} />
-              <Portal name={portals.CHECKOUT_CUSTOM_FIELDS_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_CART_BEFORE} />
+                  <Portal name={portals.CHECKOUT_CART} />
+                  <Portal name={portals.CHECKOUT_CART_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_CART_BEFORE} />
-              <Portal name={portals.CHECKOUT_CART} />
-              <Portal name={portals.CHECKOUT_CART_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_TOTALS_BEFORE} />
+                  <Portal name={portals.CHECKOUT_TOTALS}>
+                    <Totals />
+                  </Portal>
+                  <Portal name={portals.CHECKOUT_TOTALS_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_TOTALS_BEFORE} />
-              <Portal name={portals.CHECKOUT_TOTALS}>
-                <Totals />
-              </Portal>
-              <Portal name={portals.CHECKOUT_TOTALS_AFTER} />
-            </Fragment>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_PROCESS_BEFORE} />
+                  <Portal name={portals.CHECKOUT_PROCESS}>
+                    <div className={style.buttonWrapper}>
+                      <RippleButton
+                        type="secondary"
+                        disabled={this.props.disabled}
+                        onClick={this.handleProcessCheckout}
+                        data-test-id="CheckoutButton"
+                        className={style.button}
+                      >
+                        <I18n.Text string="checkout.button" />
+                      </RippleButton>
+                    </div>
+                  </Portal>
+                  <Portal name={portals.CHECKOUT_PROCESS_AFTER} />
+                </Fragment>
 
-            <Fragment>
-              <Portal name={portals.CHECKOUT_PROCESS_BEFORE} />
-              <Portal name={portals.CHECKOUT_PROCESS}>
-                <div className={style.buttonWrapper}>
-                  <RippleButton
-                    type="secondary"
-                    disabled={this.props.disabled}
-                    onClick={this.handleProcessCheckout}
-                    data-test-id="CheckoutButton"
-                    className={style.button}
-                  >
-                    <I18n.Text string="checkout.button" />
-                  </RippleButton>
-                </div>
-              </Portal>
-              <Portal name={portals.CHECKOUT_PROCESS_AFTER} />
-            </Fragment>
-
-            <Fragment>
-              <Portal name={portals.CHECKOUT_AFTER} />
-            </Fragment>
-
-          </section>
-        </View>
-      </AppContext.Provider>
+                <Fragment>
+                  <Portal name={portals.CHECKOUT_AFTER} />
+                </Fragment>
+              </section>
+            </View>
+          </AppContext.Provider>
+        )}
+      </AppContext.Consumer>
     );
   }
 }
