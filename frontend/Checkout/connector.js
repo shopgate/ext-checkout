@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => ({
   processCheckout: checkout => dispatch(processCheckout(checkout)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true});
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true });
