@@ -4,7 +4,6 @@ const SHIPPING_ADDRESS = 'shipping_address';
 const BILLING_ADDRESS = 'billing_address';
 const PAYMENT_METHOD = 'payment_method';
 const SHIPPING_METHOD = 'shipping_method';
-const CUSTOM_FIELDS = 'custom_fields';
 const TOTALS = 'totals';
 const PROCESS = 'process';
 const BEFORE = 'before';
@@ -32,10 +31,6 @@ export const CHECKOUT_PAYMENT_METHOD_AFTER = `${CHECKOUT}.${PAYMENT_METHOD}.${AF
 export const CHECKOUT_SHIPPING_METHOD_BEFORE = `${CHECKOUT}.${SHIPPING_METHOD}.${BEFORE}`;
 export const CHECKOUT_SHIPPING_METHOD = `${CHECKOUT}.${SHIPPING_METHOD}`;
 export const CHECKOUT_SHIPPING_METHOD_AFTER = `${CHECKOUT}.${SHIPPING_METHOD}.${AFTER}`;
-
-export const CHECKOUT_CUSTOM_FIELDS_BEFORE = `${CHECKOUT}.${CUSTOM_FIELDS}.${BEFORE}`;
-export const CHECKOUT_CUSTOM_FIELDS = `${CHECKOUT}.${CUSTOM_FIELDS}`;
-export const CHECKOUT_CUSTOM_FIELDS_AFTER = `${CHECKOUT}.${CUSTOM_FIELDS}.${AFTER}`;
 
 export const CHECKOUT_TOTALS_BEFORE = `${CHECKOUT}.${TOTALS}.${BEFORE}`;
 export const CHECKOUT_TOTALS = `${CHECKOUT}.${TOTALS}`;
