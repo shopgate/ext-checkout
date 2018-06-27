@@ -1,5 +1,6 @@
 {
   "checkout": {
+    "title": "Checkout",
     "button": "Place order",
     "success": {
       "title": "Thank you for your order!",
