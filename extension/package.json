@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/checkout",
-  "version": "2.2.1",
+  "version": "2.2.2-beta.1",
   "description": "Shopgate Connect checkout extension",
   "repository": {
     "type": "git",
