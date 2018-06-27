@@ -6,6 +6,9 @@
       "title": "Thank you for your order!",
       "text": "Your order is received",
       "continueShopping": "Continue shopping"
+    },
+    "totals": {
+      "total": "Total"
     }
   }
 }

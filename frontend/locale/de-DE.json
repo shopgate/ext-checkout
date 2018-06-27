@@ -6,6 +6,9 @@
       "title": "Vielen Dank für Ihre Bestellung!",
       "text": "Ihre Bestellung ist eingegangen",
       "continueShopping": "Weiter shoppen"
+    },
+    "totals": {
+      "total": "Gesamtsumme"
     }
  }
 }
