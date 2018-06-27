@@ -21,7 +21,7 @@ const Totals = ({ totals }) => (
                 grow={1}
                 className={total.id === 'total' ? style.total : style.subTotal}
               >
-                {total.label}
+                <I18n.Text string={`checkout.totals.${total.id}`} />
               </Grid.Item>
               <Grid.Item
                 grow={0}
