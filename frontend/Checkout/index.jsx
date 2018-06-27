@@ -23,6 +23,19 @@ class Checkout extends Component {
     checkout: {},
   }
 
+  static contextTypes = {
+    i18n: PropTypes.func,
+  };
+
+  /**
+   * Returns the translated view title.
+   * @return {string}
+   */
+  get title() {
+    const { __ } = this.context.i18n();
+    return __('checkout.title');
+  }
+
   /**
    * @param {Object} event App event
    */
@@ -42,7 +55,7 @@ class Checkout extends Component {
         {context => (
           // eslint-disable-next-line extra-rules/no-single-line-objects
           <AppContext.Provider value={{ ...context, checkout }}>
-            <View>
+            <View title={this.title}>
               <section className={style.container} data-test-id="CheckoutPage">
                 <Fragment>
                   <Portal name={portals.CHECKOUT_BEFORE} />
