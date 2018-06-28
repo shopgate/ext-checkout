@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const CheckoutError = require('./../common/Error/CheckoutError')
+const ValidationError = require('./../common/Error/ValidationError')
 const {totalsSchema} = require('./jsonSchema')
 
 /**
@@ -21,6 +21,6 @@ module.exports = async (context, input) => {
       error: validationResult.error.details[0].message
     }, 'Checkout totals are malformed')
 
-    throw new CheckoutError('Checkout totals are malformed')
+    throw new ValidationError('Checkout totals are malformed')
   }
 }
