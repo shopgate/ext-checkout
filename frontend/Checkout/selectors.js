@@ -13,3 +13,9 @@ export const getCheckoutDisabled = state => state.extensions['@shopgate/checkout
  * @return {*}
  */
 export const getCheckoutTotals = state => state.extensions['@shopgate/checkout/CheckoutReducers'].totals;
+/**
+ * @param {Object} state redux
+ * @return {*}
+ */
+export const getCheckoutLogs = state => state.extensions['@shopgate/checkout/CheckoutReducers'].logs;
+

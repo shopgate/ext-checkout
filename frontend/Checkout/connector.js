@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
  * @return {{processCheckout: (function(*=): *)}}
  */
 const mapDispatchToProps = dispatch => ({
-  processCheckout: checkout => dispatch(processCheckout(checkout)),
+  processCheckout: () => dispatch(processCheckout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true });

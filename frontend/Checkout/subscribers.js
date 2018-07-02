@@ -28,15 +28,19 @@ export default (subscribe) => {
     dispatch(replaceHistory({ pathname: '/checkout/success' }));
   });
 
-  let checkoutStateTimeout = null;
+  // Notify immediately, that checkout state is changed
   subscribe(checkoutData$, ({ dispatch, getState }) => {
-    clearTimeout(checkoutStateTimeout);
-    checkoutStateTimeout = setTimeout(() => {
-      dispatch(checkoutState(getCheckout(getState())));
-    }, 100);
+    dispatch(checkoutState(getCheckout(getState())));
   });
 
+  // Fetch totals with a little delay
+  let checkoutFetchTotalsTimeout = null;
   subscribe(checkoutState$, ({ dispatch, action }) => {
-    fetchTotals(action.checkout)(dispatch);
+    clearTimeout(checkoutFetchTotalsTimeout);
+    checkoutFetchTotalsTimeout = setTimeout(
+      dispatch,
+      700,
+      fetchTotals(action.checkout)
+    );
   });
 };

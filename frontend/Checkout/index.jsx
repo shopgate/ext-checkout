@@ -19,13 +19,13 @@ class Checkout extends Component {
     checkout: PropTypes.shape(),
   }
 
-  static defaultProps = {
-    checkout: {},
-  }
-
   static contextTypes = {
     i18n: PropTypes.func,
   };
+
+  static defaultProps = {
+    checkout: {},
+  }
 
   /**
    * Returns the translated view title.
@@ -41,7 +41,7 @@ class Checkout extends Component {
    */
   handleProcessCheckout = (event) => {
     event.preventDefault();
-    this.props.processCheckout(this.props.checkout);
+    this.props.processCheckout();
   }
 
   /**
