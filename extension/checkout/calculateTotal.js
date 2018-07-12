@@ -18,8 +18,13 @@ module.exports = async (context, input) => {
       0
     )
 
-  total = Math.round(total * 100) / 100
+  // TODO How to handle taxes ? Are they chargeable or not
+  const tax = totals.find(total => total.id === 'tax')
+  if (tax) {
+    total -= tax.amount
+  }
 
+  total = Math.round(total * 100) / 100
   totals.push({
     id: 'total',
     amount: total
