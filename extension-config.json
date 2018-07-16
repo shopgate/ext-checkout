@@ -1,5 +1,5 @@
 {
-  "version": "2.2.2-beta.4",
+  "version": "2.2.2-beta.5",
   "id": "@shopgate/checkout",
   "configuration": {
     "currency": {
