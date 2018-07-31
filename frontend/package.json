@@ -8,7 +8,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
+    "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx .",
+    "e2e": "cypress open -P ./e2e"
   },
   "devDependencies": {
     "@shopgate/pwa-core": "latest",
@@ -17,7 +18,9 @@
     "@shopgate/pwa-ui-shared": "^5.5.0-beta.6",
     "@shopgate/react-hammerjs": "latest",
     "@shopgate/eslint-config": "latest",
+    "@shopgate/pwa-e2e-test": "5.6.0-beta.6",
     "eslint": "^4.19.1",
+    "cypress": "2.1.0",
     "glamor": "^2.20.40",
     "react": "^16.3.2",
     "prop-types": "^15.6.0",
