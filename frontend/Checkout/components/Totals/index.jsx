@@ -21,13 +21,17 @@ const Totals = ({ totals }) => (
                 grow={1}
                 className={total.id === 'total' ? style.total : style.subTotal}
               >
-                <I18n.Text string={`checkout.totals.${total.id}`} />
+                <div data-test-id={`totalLabel: ${total.id}`}>
+                  <I18n.Text string={`checkout.totals.${total.id}`} />
+                </div>
               </Grid.Item>
               <Grid.Item
                 grow={0}
                 className={total.id === 'total' ? style.total : style.subTotal}
               >
-                <I18n.Price price={total.amount} currency={checkout.currency} />
+                <div data-test-id={`${total.id} amount: ${total.amount}`}>
+                  <I18n.Price price={total.amount} currency={checkout.currency} />
+                </div>
               </Grid.Item>
             </Grid>
           ))
