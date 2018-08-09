@@ -13,7 +13,7 @@ import * as style from './style';
 const Totals = ({ totals }) => (
   <App>
     {({ checkout }) => (
-      <div className={style.container} data-test-id="total">
+      <div className={style.container} data-test-id="totalsComponent">
         {
           totals.map(total => (
             <Grid key={total.id}>
